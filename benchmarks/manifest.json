@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "benchmarkId": "weblens-synthetic-v0.1",
+  "description": "Synthetic examples only; no private labels or screenshots are committed.",
+  "splits": ["development", "holdout"],
+  "items": [
+    { "id": "synthetic-local-service-a", "familyId": "synthetic-family-a", "split": "development", "labelFile": "labels.example.jsonl" },
+    { "id": "synthetic-editorial-b", "familyId": "synthetic-family-b", "split": "holdout", "labelFile": "labels.example.jsonl" }
+  ]
+}

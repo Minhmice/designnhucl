@@ -1,0 +1,2 @@
+{"id":"synthetic-local-service-a","familyId":"synthetic-family-a","split":"development","leftRunId":"synthetic-before","rightRunId":"synthetic-after","expected":"right","rationale":"The right capture preserves the same brief and has an operable primary action in both required viewports."}
+{"id":"synthetic-editorial-b","familyId":"synthetic-family-b","split":"holdout","leftRunId":"synthetic-editorial-1","rightRunId":"synthetic-editorial-2","expected":"tie","rationale":"Both captures satisfy the brief and no evidence-backed material preference is established."}

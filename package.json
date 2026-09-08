@@ -1,0 +1,36 @@
+{
+  "name": "weblens",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Evidence-based website quality evaluator for lead scouting and design critique.",
+  "bin": {
+    "weblens": "dist/src/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test dist/tests/*.test.js",
+    "test:contracts": "npm run build && node --test dist/tests/contracts.test.js",
+    "test:network": "npm run build && node --test dist/tests/network.test.js",
+    "test:policies": "npm run build && node --test dist/tests/scoring.test.js dist/tests/lead.test.js dist/tests/critic.test.js",
+    "test:e2e": "npm run build && node --test dist/tests/e2e.test.js"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "chrome-launcher": "1.2.1",
+    "ip-address": "10.7.0",
+    "lighthouse": "13.4.1",
+    "openai": "7.10.0",
+    "playwright": "1.63.0",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "26.5.0",
+    "@types/pngjs": "^6.0.5",
+    "pngjs": "^7.0.0",
+    "typescript": "7.0.2"
+  }
+}
