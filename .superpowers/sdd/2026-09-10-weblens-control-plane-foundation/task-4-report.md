@@ -38,3 +38,9 @@ Implemented tenant-safe identity/provenance repositories in `src/control-plane/i
 ## Review round 3
 
 - Source-kind aliases now preserve `sourceKind`; provenance predicates require an explicit source ID and matching registry/company kind at the API guard.
+
+## Review round 4
+
+- Added owner-scoped preflight checks for referenced organizations, people, sources, and role/contact relationships before mutation dispatch.
+- Provenance-sensitive facts now validate the persisted `sources.source_kind` row under the owner tenant; caller-supplied source kind is not trusted.
+- Build passes after the changes. Full `npm test` was attempted but did not emit completion output in the allotted wait window.
