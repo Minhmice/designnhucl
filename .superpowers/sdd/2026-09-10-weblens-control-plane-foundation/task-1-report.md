@@ -11,6 +11,8 @@
 
 ## Verification
 
+Commits: `6a72752660139514285b5de9b98faab51bb4cbd3`, `37f43c22e6c4acfc98b23fd44ceec93f2902ff6a`, `617c2cb`.
+
 - Focused: `node --test dist/tests/control-plane-database.test.js dist/tests/control-plane-postgres.test.js` — 3 passed, 1 skipped (PostgreSQL URL not configured).
 - Full: `npm test` — 88 passed, 1 skipped, 0 failed.
 - `git diff --check` — clean.
