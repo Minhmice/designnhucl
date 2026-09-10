@@ -31,3 +31,9 @@ Not configured; live migration/RLS/UUIDv7/rollback assertions were skipped expli
 Addressed review findings: added `src/control-plane/cli.ts` so `db:migrate` is executable and uses `WEBLENS_PG_URL`/test URL; tenant transactions now acquire/release dedicated pool clients; migration runner uses a PostgreSQL advisory lock; owner foreign keys were added to tenant tables; opt-in PostgreSQL tests now execute migration idempotency, UUIDv7, and rollback assertions (with explicit skip when unset).
 
 Fix verification: `npm run build` passed; focused control-plane tests passed (3), PostgreSQL test skipped explicitly because `WEBLENS_PG_TEST_URL` is unset.
+
+## Review fix round 2
+
+Migration execution now acquires one dedicated pool client for advisory lock, metadata, DDL, commit/rollback, and unlock. PostgreSQL tests use a per-run temporary schema and cover idempotent migration, UUIDv7 generation, cross-tenant RLS visibility, and rollback cleanup. The organization owner self-FK is deferred initially to permit root owner insertion while preserving the owner=id invariant.
+
+Verification: focused control-plane tests 3 passed, 1 skipped; full `npm test` 88 passed, 1 skipped, 0 failed.
