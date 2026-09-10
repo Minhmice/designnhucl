@@ -42,6 +42,13 @@ test('claimNext uses SKIP LOCKED and leases only queued owner runs', async () =>
   assert.match(h.calls[0]!.text, /owner_organization_id = \$1/);
   assert.deepEqual(h.calls[0]!.values, [owner, 'worker-1', now, 30]);
   assert.equal(h.events[0]!.type, 'agent_run.leased');
+  assert.match(h.calls[0]!.text, /LIMIT 1/);
+});
+
+test('direct queued to leased transition is rejected; claimNext is leasing path', async () => {
+  const h = harness([row({ state: 'queued' })]);
+  await assert.rejects(() => h.store.transition(owner, runId, 'leased', { expectedFrom: 'queued' }), /claimNext|lease/i);
+  assert.equal(h.calls.filter(c => c.text.startsWith('UPDATE agent_runs')).length, 0);
 });
 
 test('transition rejects invalid state before SQL', async () => {
