@@ -22,3 +22,9 @@ Implemented tenant-safe identity/provenance repositories in `src/control-plane/i
 
 - Production migrations currently permit nullable confidence/source by schema design; repository preserves those values while validating supplied values.
 - If callers require stronger corroboration scoring for alias/domain/address evidence, add a dedicated evidence-count query without changing precedence or merge behavior.
+
+## Review round 1
+
+- Added owner-qualified alias/fact joins in fallback resolution and conservative single-evidence rejection.
+- Added presence-based optional ID/empty-field guards and explicit consent-status enforcement for outreach.
+- Added regression coverage for cross-tenant SQL predicates, ambiguity, and public-listing consent rejection.

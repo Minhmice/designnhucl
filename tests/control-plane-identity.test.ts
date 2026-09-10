@@ -51,4 +51,22 @@ test('contact channel outreach requires explicit permission and do-not-contact g
   await h.repo.createContactChannel(owner, { personId: subject, channelType: 'email', address: 'a@example.test', consentStatus: 'granted', doNotContact: false, outreachAllowed: true, permissionReason: 'opt-in' });
   assert.match(h.calls[0]!.text, /INSERT INTO contact_channels/);
   await assert.rejects(() => h.repo.createContactChannel(owner, { personId: subject, channelType: 'email', address: 'a@example.test', consentStatus: 'unknown', doNotContact: true, outreachAllowed: true, permissionReason: 'public listing' }), /outreach|do-not-contact/i);
+  await assert.rejects(() => h.repo.createContactChannel(owner, { personId: subject, channelType: 'email', address: 'a@example.test', consentStatus: 'unknown', doNotContact: false, outreachAllowed: true, permissionReason: 'public listing' }), /consent|outreach|permission/i);
+});
+
+test('optional IDs and empty optional values are validated before SQL', async () => {
+  const h = harness();
+  await assert.rejects(() => h.repo.createOrganization(owner, { id: '', name: 'Acme' }), /UUID/);
+  await assert.rejects(() => h.repo.createSource(owner, { id: '', uri: 'https://example.test' }), /UUID/);
+  await assert.rejects(() => h.repo.createWebProperty(owner, { organizationId: subject, domain: '' }), /domain/i);
+  await assert.rejects(() => h.repo.resolveOrganization(owner, { alias: '' }), /alias/i);
+  assert.equal(h.calls.length, 0);
+});
+
+test('fallback resolution requires independent corroborating evidence and tenant filters', async () => {
+  const h = harness((text) => text.includes('organization_aliases') ? [{ id: subject }] : []);
+  const unresolved = await h.repo.resolveOrganization(owner, { alias: 'Acme' });
+  assert.equal(unresolved.kind, 'unresolved');
+  assert.match(h.calls[0]!.text, /a\.owner_organization_id = \$1/);
+  assert.match(h.calls[0]!.text, /f\.owner_organization_id = \$1/);
 });
