@@ -12,8 +12,8 @@ function row(sequence = '1') { return { id: '00000000-0000-0000-0000-00000000000
 test('append allocates owner sequence and returns inserted event', async () => {
   let seen: { text: string; values: readonly unknown[] | undefined } | undefined;
   const executor: SqlExecutor = { query: async <T>(text: string, values?: readonly unknown[]): Promise<SqlQueryResult<T>> => { seen = { text, values }; return { rows: [row() as T], rowCount: 1 }; } };
-  const result = await new EventStore(executor).append(input);
-  assert.equal(result.sequence, 1);
+  const result = await new EventStore(executor, { withTenant: async (_owner, work) => work(executor) }).append(input);
+  assert.equal(result.sequence, '1');
   assert.match(seen!.text, /event_counters/); assert.match(seen!.text, /owner_organization_id/);
   assert.deepEqual(seen!.values, [owner, aggregate, 'run', 'created', 1, input.payload, undefined, 'agent', 'trace-1', undefined, undefined, undefined]);
 });
@@ -44,23 +44,23 @@ test('malformed owner id is rejected before SQL execution', async () => {
 test('reusing an idempotency key returns an identical existing event', async () => {
   const existing = { ...row(), idempotencyKey: 'request-1' };
   let calls = 0;
-  const executor: SqlExecutor = { query: async <T>() => ({ rows: (++calls === 1 ? [] : [existing]) as T[], rowCount: 1 }) };
-  const result = await new EventStore(executor).append({ ...input, idempotencyKey: 'request-1' });
+  const executor: SqlExecutor = { query: async <T>() => ({ rows: (++calls === 2 ? [existing] : []) as T[], rowCount: 1 }) };
+  const result = await new EventStore(executor, { withTenant: async (_owner, work) => work(executor) }).append({ ...input, idempotencyKey: 'request-1' });
   assert.equal(result.id, existing.id); assert.equal(calls, 2);
 });
 
 test('conflicting idempotency-key reuse throws without issuing a second append', async () => {
   const existing = { ...row(), idempotencyKey: 'request-1', eventType: 'other' };
   let calls = 0;
-  const executor: SqlExecutor = { query: async <T>() => ({ rows: (++calls === 1 ? [] : [existing]) as T[], rowCount: 1 }) };
-  await assert.rejects(() => new EventStore(executor).append({ ...input, idempotencyKey: 'request-1' }), /Idempotency key conflict/);
+  const executor: SqlExecutor = { query: async <T>() => ({ rows: (++calls === 2 ? [existing] : []) as T[], rowCount: 1 }) };
+  await assert.rejects(() => new EventStore(executor, { withTenant: async (_owner, work) => work(executor) }).append({ ...input, idempotencyKey: 'request-1' }), /Idempotency key conflict/);
   assert.equal(calls, 2);
 });
 
 test('idempotency payload comparison follows JSON object semantics', async () => {
   const existing = { ...row(), idempotencyKey: 'request-2', payload: { a: 1, b: 2 } };
-  const executor: SqlExecutor = { query: async <T>() => ({ rows: [existing] as T[], rowCount: 1 }) };
-  const result = await new EventStore(executor).append({ ...input, idempotencyKey: 'request-2', payload: { b: 2, a: 1 } });
+  let calls = 0; const executor: SqlExecutor = { query: async <T>() => ({ rows: (++calls === 2 ? [existing] : []) as T[], rowCount: 1 }) };
+  const result = await new EventStore(executor, { withTenant: async (_owner, work) => work(executor) }).append({ ...input, idempotencyKey: 'request-2', payload: { b: 2, a: 1 } });
   assert.equal(result.id, existing.id);
 });
 
@@ -69,4 +69,25 @@ test('append rejects malformed optional fields before SQL', async () => {
   await assert.rejects(() => new EventStore(executor).append({ ...input, causationId: 'bad' }), /causationId/);
   await assert.rejects(() => new EventStore(executor).append({ ...input, occurredAt: 'bad-date' }), /occurredAt/);
   assert.equal(calls, 0);
+});
+
+test('idempotent replay locks then looks up without allocation', async () => {
+  const calls: string[] = []; const existing = { ...row(), idempotencyKey: 'replay' };
+  const executor: SqlExecutor = { query: async <T>(text: string) => { calls.push(text); return { rows: (calls.length === 2 ? [existing] : []) as T[], rowCount: 1 }; } };
+  await new EventStore(executor, { withTenant: async (_owner, work) => work(executor) }).append({ ...input, idempotencyKey: 'replay' });
+  assert.match(calls[0]!, /pg_advisory_xact_lock/); assert.match(calls[1]!, /FROM domain_events/); assert.equal(calls.length, 2);
+});
+
+test('nested invalid JSON and cycles fail before executor invocation', async () => {
+  let calls = 0; const executor: SqlExecutor = { query: async () => { calls++; return { rows: [], rowCount: 0 }; } };
+  const cyclic: { self?: unknown } = {}; cyclic.self = cyclic;
+  await assert.rejects(() => new EventStore(executor).append({ ...input, payload: { nested: undefined } }), /payload/);
+  await assert.rejects(() => new EventStore(executor).append({ ...input, payload: cyclic }), /payload/);
+  await assert.rejects(() => new EventStore(executor).append({ ...input, payload: [Number.NaN] }), /payload/);
+  assert.equal(calls, 0);
+});
+
+test('append requires a tenant transaction runner', async () => {
+  const executor: SqlExecutor = { query: async () => ({ rows: [], rowCount: 0 }) };
+  await assert.rejects(() => new EventStore(executor).append(input), /transaction runner/);
 });
