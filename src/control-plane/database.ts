@@ -9,6 +9,7 @@ export class PgDatabase {
   async query<T = Record<string, unknown>>(text: string, values?: readonly unknown[]) { return this.executor.query<T>(text, values); }
   async withTenant<T>(ownerOrganizationId: string, work: (tx: Transaction) => Promise<T>): Promise<T> {
     const txExecutor = this.executor as SqlExecutor & Partial<Transaction>;
+    await txExecutor.query('BEGIN');
     await txExecutor.query("select set_config('app.owner_organization_id', $1, $2)", [ownerOrganizationId, true]);
     const tx: Transaction = {
       query: txExecutor.query.bind(txExecutor),

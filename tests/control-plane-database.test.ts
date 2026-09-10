@@ -7,8 +7,8 @@ test('tenant transaction sets local owner context before callback', async () => 
   const executor: SqlExecutor = { query: async (text, values) => { calls.push(values === undefined ? { text } : { text, values }); return { rows: [], rowCount: 0 }; } };
   const db = new PgDatabase(executor);
   await db.withTenant('00000000-0000-0000-0000-000000000001', async tx => { await tx.query('select $1', ['ok']); });
-  assert.match(calls[0]!.text, /set_config\('app\.owner_organization_id'/);
-  assert.deepEqual(calls[0]!.values, ['00000000-0000-0000-0000-000000000001', true]);
+  assert.match(calls[1]!.text, /set_config\('app\.owner_organization_id'/);
+  assert.deepEqual(calls[1]!.values, ['00000000-0000-0000-0000-000000000001', true]);
 });
 
 test('migration runner orders, checksums, and is idempotent', async () => {
