@@ -14,6 +14,7 @@ function row(overrides: Record<string, unknown> = {}): Record<string, unknown> {
 function harness(rows: Record<string, unknown>[] = [row()]) {
   const calls: Array<{ text: string; values: readonly unknown[] | undefined }> = [];
   const tx: SqlExecutor = { query: async <T>(text: string, values?: readonly unknown[]) => { calls.push({ text, values });
+    if (text.startsWith('SELECT id FROM agent_runs')) return { rows: [row({ state: 'running', lease_owner: 'worker-1', lease_expires_at: new Date(now.getTime() + 60000).toISOString() })] as T[], rowCount: 1 };
     if (text.includes('run_steps')) return { rows: [{ id: 'step-1', owner_organization_id: owner, run_id: runId, sequence: 1, attempt: 1, state: 'queued', lease_owner: 'worker-1', lease_expires_at: new Date(now.getTime() + 60000).toISOString() }] as T[], rowCount: 1 };
     if (text.includes('lease_expires_at =') && text.includes('state NOT IN')) return { rows: [row({ state: 'succeeded', lease_owner: 'worker-1' })] as T[], rowCount: 1 };
     if (text.includes("state = 'leased'")) return { rows: [row({ state: 'leased', lease_owner: 'worker-1', lease_expires_at: new Date(now.getTime() + 60000).toISOString() })] as T[], rowCount: 1 };
@@ -49,6 +50,13 @@ test('transition rejects invalid state before SQL', async () => {
   assert.equal(h.calls.length, 1);
 });
 
+test('worker transition requires matching unexpired lease', async () => {
+  const h = harness([row({ state: 'leased', lease_owner: 'worker-1', lease_expires_at: new Date(now.getTime() - 1).toISOString() })]);
+  await assert.rejects(() => h.store.transition(owner, runId, 'running', { expectedFrom: 'leased', leaseOwner: 'worker-1', now }), /lease|expired/i);
+  assert.equal(h.calls.filter(c => c.text.startsWith('UPDATE agent_runs')).length, 0);
+  await assert.rejects(() => h.store.transition(owner, runId, 'running', { expectedFrom: 'leased', leaseOwner: '' }), /lease owner/i);
+});
+
 test('heartbeat requires lease owner and never resurrects terminal run', async () => {
   const h = harness([row({ state: 'succeeded', lease_owner: 'worker-1' })]);
   await assert.rejects(() => h.store.heartbeat(owner, runId, 'worker-1', 30, now), /terminal|state/i);
@@ -61,13 +69,23 @@ test('step sequence and attempt are persisted with bounded projections', async (
   const step = await h.store.appendStep(owner, runId, 'worker-1', { inputProjection: { url: 'https://example.com' }, checkpoint: { cursor: 1 } }, now);
   assert.equal(step.sequence, 1);
   assert.equal(step.attempt, 1);
-  assert.match(h.calls[0]!.text, /run_steps/);
+  assert.match(h.calls.find(c => c.text.includes('run_steps'))!.text, /run_steps/);
   assert.equal(h.events[0]!.type, 'agent_run.step_appended');
+  assert.match(h.calls.find(c => c.text.includes('FOR UPDATE'))!.text, /FOR UPDATE/);
+  assert.match(h.calls.find(c => c.text.includes('s.owner_organization_id'))!.text, /s\.owner_organization_id = \$1/);
+});
+
+test('terminal transition clears lease metadata', async () => {
+  const h = harness([row({ state: 'running', lease_owner: 'worker-1', lease_expires_at: new Date(now.getTime() + 60000).toISOString() })]);
+  await h.store.transition(owner, runId, 'succeeded', { expectedFrom: 'running', leaseOwner: 'worker-1', now });
+  assert.match(h.calls.at(-1)!.text, /lease_owner = NULL/);
+  assert.match(h.calls.at(-1)!.text, /lease_expires_at = NULL/);
 });
 
 test('malformed ids and oversized projections fail before executor calls', async () => {
   const h = harness();
   await assert.rejects(() => h.store.create('bad'), /UUID/);
   await assert.rejects(() => h.store.appendStep(owner, runId, 'worker', { outputProjection: { huge: 'x'.repeat(20000) } }), /projection|size/i);
+  await assert.rejects(() => h.store.appendStep(owner, runId, 'worker', { outputProjection: { huge: 'é'.repeat(10000) } }), /projection|size/i);
   assert.equal(h.calls.length, 0);
 });
