@@ -25,3 +25,9 @@ Not configured; live migration/RLS/UUIDv7/rollback assertions were skipped expli
 
 - `db:migrate` is a package script placeholder for the migration entrypoint; deployment wiring should provide a configured `pg` executor before production use.
 - Live PostgreSQL integration remains to be exercised in an environment running PostgreSQL 18 with `uuidv7()`.
+
+## Review fix round
+
+Addressed review findings: added `src/control-plane/cli.ts` so `db:migrate` is executable and uses `WEBLENS_PG_URL`/test URL; tenant transactions now acquire/release dedicated pool clients; migration runner uses a PostgreSQL advisory lock; owner foreign keys were added to tenant tables; opt-in PostgreSQL tests now execute migration idempotency, UUIDv7, and rollback assertions (with explicit skip when unset).
+
+Fix verification: `npm run build` passed; focused control-plane tests passed (3), PostgreSQL test skipped explicitly because `WEBLENS_PG_TEST_URL` is unset.

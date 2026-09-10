@@ -20,4 +20,17 @@ CREATE TABLE IF NOT EXISTS run_steps (id uuid PRIMARY KEY DEFAULT uuidv7(), owne
 CREATE TABLE IF NOT EXISTS evaluation_requests (id uuid PRIMARY KEY DEFAULT uuidv7(), owner_organization_id uuid NOT NULL, idempotency_key text NOT NULL, status text NOT NULL, UNIQUE(owner_organization_id, idempotency_key));
 CREATE TABLE IF NOT EXISTS evaluation_references (id uuid PRIMARY KEY DEFAULT uuidv7(), owner_organization_id uuid NOT NULL, request_id uuid REFERENCES evaluation_requests(id), run_id text NOT NULL, recipe text NOT NULL, execution_status text NOT NULL, assessment_status text NOT NULL, policy_verdict text, artifact_uri text NOT NULL, result_sha256 text NOT NULL, subject_context_sha256 text NOT NULL, projection jsonb, cost_total numeric, created_at timestamptz NOT NULL DEFAULT now());
 CREATE INDEX IF NOT EXISTS domain_events_owner_seq ON domain_events(owner_organization_id, sequence); CREATE INDEX IF NOT EXISTS agent_runs_lease ON agent_runs(owner_organization_id, state, lease_expires_at); CREATE INDEX IF NOT EXISTS evaluation_requests_idem ON evaluation_requests(owner_organization_id, idempotency_key);
+ALTER TABLE organization_aliases ADD CONSTRAINT organization_aliases_owner_fk FOREIGN KEY (owner_organization_id) REFERENCES organizations(id) NOT VALID;
+ALTER TABLE legal_entities ADD CONSTRAINT legal_entities_owner_fk FOREIGN KEY (owner_organization_id) REFERENCES organizations(id) NOT VALID;
+ALTER TABLE sources ADD CONSTRAINT sources_owner_fk FOREIGN KEY (owner_organization_id) REFERENCES organizations(id) NOT VALID;
+ALTER TABLE facts ADD CONSTRAINT facts_owner_fk FOREIGN KEY (owner_organization_id) REFERENCES organizations(id) NOT VALID;
+ALTER TABLE people ADD CONSTRAINT people_owner_fk FOREIGN KEY (owner_organization_id) REFERENCES organizations(id) NOT VALID;
+ALTER TABLE person_roles ADD CONSTRAINT person_roles_owner_fk FOREIGN KEY (owner_organization_id) REFERENCES organizations(id) NOT VALID;
+ALTER TABLE contact_channels ADD CONSTRAINT contact_channels_owner_fk FOREIGN KEY (owner_organization_id) REFERENCES organizations(id) NOT VALID;
+ALTER TABLE web_properties ADD CONSTRAINT web_properties_owner_fk FOREIGN KEY (owner_organization_id) REFERENCES organizations(id) NOT VALID;
+ALTER TABLE domain_events ADD CONSTRAINT domain_events_owner_fk FOREIGN KEY (owner_organization_id) REFERENCES organizations(id) NOT VALID;
+ALTER TABLE agent_runs ADD CONSTRAINT agent_runs_owner_fk FOREIGN KEY (owner_organization_id) REFERENCES organizations(id) NOT VALID;
+ALTER TABLE run_steps ADD CONSTRAINT run_steps_owner_fk FOREIGN KEY (owner_organization_id) REFERENCES organizations(id) NOT VALID;
+ALTER TABLE evaluation_requests ADD CONSTRAINT evaluation_requests_owner_fk FOREIGN KEY (owner_organization_id) REFERENCES organizations(id) NOT VALID;
+ALTER TABLE evaluation_references ADD CONSTRAINT evaluation_references_owner_fk FOREIGN KEY (owner_organization_id) REFERENCES organizations(id) NOT VALID;
 DO $$ DECLARE t text; BEGIN FOREACH t IN ARRAY ARRAY['organization_aliases','legal_entities','sources','facts','people','person_roles','contact_channels','web_properties','event_counters','domain_events','agent_runs','run_steps','evaluation_requests','evaluation_references'] LOOP EXECUTE format('ALTER TABLE %I ENABLE ROW LEVEL SECURITY', t); EXECUTE format('ALTER TABLE %I FORCE ROW LEVEL SECURITY', t); EXECUTE format('CREATE POLICY %I_tenant ON %I USING (owner_organization_id = NULLIF(current_setting(''app.owner_organization_id'', true),'''')::uuid)', t, t); END LOOP; END $$;

@@ -3,12 +3,15 @@ import { createHash } from 'node:crypto';
 export interface SqlQueryResult<T = Record<string, unknown>> { rows: T[]; rowCount: number | null }
 export interface SqlExecutor { query<T = Record<string, unknown>>(text: string, values?: readonly unknown[]): Promise<SqlQueryResult<T>> }
 export interface Transaction extends SqlExecutor { commit(): Promise<void>; rollback(): Promise<void> }
+export interface PgClientLike extends SqlExecutor { release(): void }
+export interface PgPoolLike extends SqlExecutor { connect(): Promise<PgClientLike> }
 
 export class PgDatabase {
-  constructor(private readonly executor: SqlExecutor) {}
+  constructor(private readonly executor: SqlExecutor, private readonly pool?: PgPoolLike) {}
   async query<T = Record<string, unknown>>(text: string, values?: readonly unknown[]) { return this.executor.query<T>(text, values); }
   async withTenant<T>(ownerOrganizationId: string, work: (tx: Transaction) => Promise<T>): Promise<T> {
-    const txExecutor = this.executor as SqlExecutor & Partial<Transaction>;
+    const client = this.pool ? await this.pool.connect() : this.executor as PgClientLike;
+    const txExecutor = client;
     await txExecutor.query('BEGIN');
     await txExecutor.query("select set_config('app.owner_organization_id', $1, $2)", [ownerOrganizationId, true]);
     const tx: Transaction = {
@@ -18,6 +21,7 @@ export class PgDatabase {
     };
     try { const result = await work(tx); await tx.commit(); return result; }
     catch (error) { await tx.rollback(); throw error; }
+    finally { if (this.pool) client.release(); }
   }
 }
 
@@ -25,6 +29,8 @@ export interface Migration { version: string; sql: string }
 export async function runMigrations(executor: SqlExecutor, migrations: readonly Migration[]): Promise<void> {
   const ordered = [...migrations].sort((a, b) => a.version.localeCompare(b.version));
   if (ordered.some((m, i) => !m.version || (i > 0 && m.version === ordered[i - 1]!.version))) throw new Error('Malformed migrations');
+  await executor.query('SELECT pg_advisory_lock(hashtext($1))', ['weblens-control-plane-migrations']);
+  try {
   await executor.query('CREATE TABLE IF NOT EXISTS control_plane_migrations (version text PRIMARY KEY, checksum text NOT NULL, applied_at timestamptz NOT NULL DEFAULT now())');
   const existing = await executor.query<{ version: string; checksum: string }>('SELECT version, checksum FROM control_plane_migrations');
   const known = new Map(existing.rows.map(r => [r.version, r.checksum]));
@@ -40,6 +46,7 @@ export async function runMigrations(executor: SqlExecutor, migrations: readonly 
       await executor.query('COMMIT');
     } catch (error) { await executor.query('ROLLBACK'); throw error; }
   }
+  } finally { await executor.query('SELECT pg_advisory_unlock(hashtext($1))', ['weblens-control-plane-migrations']); }
 }
 
 export async function loadMigrations(): Promise<Migration[]> {
