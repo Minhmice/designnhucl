@@ -53,5 +53,6 @@ export async function loadMigrations(): Promise<Migration[]> {
   const { readFile } = await import('node:fs/promises');
   const { fileURLToPath } = await import('node:url');
   const sql = await readFile(fileURLToPath(new URL('./sql/001_control_plane.sql', import.meta.url)), 'utf8');
-  return [{ version: '001_control_plane', sql }];
+  const identity = await readFile(fileURLToPath(new URL('./sql/002_identity_provenance.sql', import.meta.url)), 'utf8');
+  return [{ version: '001_control_plane', sql }, { version: '002_identity_provenance', sql: identity }];
 }

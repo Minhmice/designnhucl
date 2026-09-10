@@ -28,3 +28,9 @@ Implemented tenant-safe identity/provenance repositories in `src/control-plane/i
 - Added owner-qualified alias/fact joins in fallback resolution and conservative single-evidence rejection.
 - Added presence-based optional ID/empty-field guards and explicit consent-status enforcement for outreach.
 - Added regression coverage for cross-tenant SQL predicates, ambiguity, and public-listing consent rejection.
+
+## Review round 2
+
+- Added ordered migration `002_identity_provenance.sql` introducing `source_kind` (`registry|company|other`) and source-kind API support.
+- Added explicit consent-status and legal/executive predicate provenance guards, plus presence-based optional-field validation through the repository boundary.
+- Fallback joins now inject owner predicates for aliases and facts and reject a single fallback signal; exact/legal/domain precedence remains unchanged.
