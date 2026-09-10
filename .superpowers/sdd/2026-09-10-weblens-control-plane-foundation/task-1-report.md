@@ -56,3 +56,19 @@ Verification:
 - `git diff --check` — clean.
 
 PostgreSQL live integration remains explicitly skipped because `WEBLENS_PG_TEST_URL` is not configured; the trigger will be exercised when PostgreSQL 18 integration is available.
+
+## Review fix round 5
+
+Fixed the PostgreSQL integration bootstrap so each explicit root organization is inserted in its own `BEGIN` / tenant `set_config` / parameterized `INSERT` / `COMMIT` transaction. This keeps the test compatible with `FORCE ROW LEVEL SECURITY` under an ordinary role without weakening policies or permitting unscoped roots. The same dedicated client and explicit tenant transactions are used for all subsequent isolation and rollback checks.
+
+Added live assertions for one recorded migration and checksum-preserving idempotent reapplication, UUIDv7 default IDs (version and RFC 9562 variant bits), cross-tenant read isolation, cross-tenant write rejection, and rollback cleanup. Root owner IDs are explicit valid UUIDs and remain distinct.
+
+Verification:
+
+- Commit: `a65e984` (`test(control-plane): secure postgres bootstrap`).
+- `npm run build` — passed (`tsc -p tsconfig.json`).
+- `node --test dist/tests/control-plane-database.test.js dist/tests/control-plane-postgres.test.js` — 3 passed, 1 skipped (`WEBLENS_PG_TEST_URL` is not configured).
+- `npm test` — 88 passed, 1 skipped, 0 failed (89 tests; 50.009s).
+- `git diff --check` — clean.
+
+PostgreSQL live integration remains explicitly skipped because `WEBLENS_PG_TEST_URL` is not configured; configured runs will exercise the new assertions against PostgreSQL 18.
