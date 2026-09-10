@@ -35,19 +35,40 @@ export class IdentityRepository {
     return new Proxy(this, { get: (target, prop, receiver) => {
       const value = Reflect.get(target, prop, receiver);
       if (typeof value !== 'function' || prop === 'constructor') return value;
-      return (...args: unknown[]) => Promise.resolve().then(() => {
+      return (...args: unknown[]) => Promise.resolve().then(async () => {
         const input = args[1] as Record<string, unknown> | undefined;
         if (input && typeof input === 'object') {
           if (prop === 'createSource' && input.sourceKind !== undefined && !['registry','company','other'].includes(String(input.sourceKind))) throw new Error('Invalid source kind');
           optionalUuid('id', input.id);
           for (const key of ['alias', 'address', 'domain', 'legalName', 'name', 'predicate', 'role', 'channelType', 'consentStatus', 'status'] as const) if (key in input && typeof input[key] === 'string' && !(input[key] as string).trim()) throw new Error(`Invalid ${key}`);
           if (input.outreachAllowed === true && (input.doNotContact === true || !['granted', 'opt-in', 'opted_in', 'explicit'].includes(String(input.consentStatus).toLowerCase()) || !String(input.permissionReason ?? '').trim())) throw new Error('Outreach forbidden without explicit consent');
-          if (prop === 'appendFact' || prop === 'recordFact') { const p = String(input.predicate ?? '').toLowerCase(); if (/legal|registration|tax/.test(p) && (input.sourceKind !== 'registry' || !input.sourceId)) throw new Error('Registry source and sourceId required for legal facts'); if (/executive|ceo|representative/.test(p) && (input.sourceKind !== 'company' || !input.sourceId)) throw new Error('Company source and sourceId required for executive facts'); }
         }
         if ((prop === 'createSource' || prop === 'recordSource') && input?.sourceKind !== undefined) return target.createSourceWithKind(args[0] as string, input as never);
+        if (input && typeof input === 'object' && typeof args[0] === 'string') await target.preflight(args[0] as string, String(prop), input);
         return (value as (...a: unknown[]) => unknown).apply(target, args);
       });
     } }) as this;
+  }
+  private async preflight(owner: string, operation: string, input: Record<string, unknown>): Promise<void> {
+    const ids: Array<[string,string,string]> = [];
+    if (['createAlias','createLegalEntity','createWebProperty'].includes(operation) && input.organizationId) ids.push(['organizations', String(input.organizationId), 'organization']);
+    if (operation === 'createPersonRole') { ids.push(['people', String(input.personId), 'person']); ids.push(['organizations', String(input.organizationId), 'organization']); }
+    if (operation === 'createContactChannel' && input.personId) ids.push(['people', String(input.personId), 'person']);
+    if ((operation === 'appendFact' || operation === 'recordFact') && input.sourceId) ids.push(['sources', String(input.sourceId), 'source']);
+    if (!ids.length) return;
+    await this.run(owner, async tx => {
+      for (const [table,id,label] of ids) await this.ensureOwned(tx, owner, table, id, label);
+      if (operation === 'appendFact' || operation === 'recordFact') {
+        const p = String(input.predicate ?? '').toLowerCase();
+        if (/legal|registration|tax|executive|ceo|representative/.test(p)) {
+          if (!input.sourceId) throw new Error('Source and sourceId required for provenance-sensitive fact');
+          const r = await tx.query<Record<string,unknown>>('SELECT source_kind FROM sources WHERE owner_organization_id = $1 AND id = $2', [owner, input.sourceId]);
+          const kind = String(r.rows[0]?.source_kind ?? '');
+          if (/legal|registration|tax/.test(p) && kind !== 'registry') throw new Error('Registry source required for legal facts');
+          if (/executive|ceo|representative/.test(p) && kind !== 'company') throw new Error('Company source required for executive facts');
+        }
+      }
+    });
   }
   private run<T>(owner: string, work: (tx: SqlExecutor) => Promise<T>): Promise<T> { uuid('ownerOrganizationId', owner); return this.runner.withTenant(owner, tx => work({ query: (sql, values) => tx.query(sql.replace('LEFT JOIN organization_aliases a ON a.organization_id = o.id', 'LEFT JOIN organization_aliases a ON a.organization_id = o.id AND a.owner_organization_id = $1').replace('LEFT JOIN facts f ON f.subject_id = o.id', 'LEFT JOIN facts f ON f.subject_id = o.id AND f.owner_organization_id = $1'), values) })); }
   private async ensureOwned(tx: SqlExecutor, owner: string, table: string, id: string, label: string): Promise<void> { const r = await tx.query(`SELECT id FROM ${table} WHERE owner_organization_id = $1 AND id = $2`, [owner, id]); if (!r.rows.length) throw new Error(`${label} not found for owner`); }
