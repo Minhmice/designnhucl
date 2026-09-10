@@ -16,7 +16,7 @@ function validate(input: EventInput): Required<Pick<EventInput, 'ownerOrganizati
   for (const key of ['aggregateType', 'eventType'] as const) if (!input[key] || input[key].length > 200) throw new Error(`Invalid ${key}`);
   if (input.eventVersion !== undefined && (!Number.isInteger(input.eventVersion) || input.eventVersion < 1)) throw new Error('Invalid eventVersion');
   if (input.payload === undefined || input.payload === null || !isJsonValue(input.payload, new Set())) throw new Error('Invalid payload');
-  for (const key of ['actor', 'traceId', 'idempotencyKey'] as const) if (input[key] !== undefined && typeof input[key] !== 'string') throw new Error(`Invalid ${key}`);
+  for (const key of ['actor', 'traceId', 'idempotencyKey'] as const) if (input[key] !== undefined && (typeof input[key] !== 'string' || (key === 'idempotencyKey' && input[key].length === 0))) throw new Error(`Invalid ${key}`);
   for (const key of ['causationId', 'correlationId'] as const) if (input[key] !== undefined && !UUID.test(input[key]!)) throw new Error(`Invalid ${key}`);
   if (input.occurredAt !== undefined && (!(input.occurredAt instanceof Date || typeof input.occurredAt === 'string') || Number.isNaN(new Date(input.occurredAt).getTime()))) throw new Error('Invalid occurredAt');
   return input as Required<Pick<EventInput, 'ownerOrganizationId'|'aggregateType'|'aggregateId'|'eventType'>> & EventInput;
@@ -83,10 +83,20 @@ export class EventStore {
     const r = await this.executor.query<Record<string, unknown>>('SELECT * FROM domain_events WHERE owner_organization_id = $1 AND aggregate_type = $2 AND aggregate_id = $3 ORDER BY sequence ASC', [ownerOrganizationId, aggregateType, aggregateId]);
     return r.rows.map(mapRow);
   }
-  async listSince(ownerOrganizationId: string, sinceSequence = 0, limit = 100): Promise<DomainEvent[]> {
+  async listSince(ownerOrganizationId: string, sinceSequence: string | bigint | number = 0, limit = 100): Promise<DomainEvent[]> {
     if (!UUID.test(ownerOrganizationId)) throw new Error('Invalid ownerOrganizationId');
-    if (!Number.isSafeInteger(sinceSequence) || sinceSequence < 0 || !Number.isSafeInteger(limit) || limit < 1 || limit > 1000) throw new Error('Invalid cursor or limit');
-    const r = await this.executor.query<Record<string, unknown>>('SELECT * FROM domain_events WHERE owner_organization_id = $1 AND sequence > $2 ORDER BY sequence ASC LIMIT $3', [ownerOrganizationId, sinceSequence, limit]);
+    let cursor: string;
+    if (typeof sinceSequence === 'bigint') {
+      if (sinceSequence < 0n) throw new Error('Invalid cursor or limit');
+      cursor = sinceSequence.toString();
+    } else if (typeof sinceSequence === 'number') {
+      if (!Number.isSafeInteger(sinceSequence) || sinceSequence < 0) throw new Error('Invalid cursor or limit');
+      cursor = String(sinceSequence);
+    } else if (typeof sinceSequence === 'string' && /^\d+$/.test(sinceSequence)) {
+      cursor = BigInt(sinceSequence).toString();
+    } else throw new Error('Invalid cursor or limit');
+    if (!Number.isSafeInteger(limit) || limit < 1 || limit > 1000) throw new Error('Invalid cursor or limit');
+    const r = await this.executor.query<Record<string, unknown>>('SELECT * FROM domain_events WHERE owner_organization_id = $1 AND sequence > $2 ORDER BY sequence ASC LIMIT $3', [ownerOrganizationId, cursor, limit]);
     return r.rows.map(mapRow);
   }
 }

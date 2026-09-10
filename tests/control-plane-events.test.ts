@@ -32,7 +32,25 @@ test('list methods are tenant scoped with cursor and limit', async () => {
   await store.listByAggregate(owner, 'run', aggregate);
   await store.listSince(owner, 4, 10);
   assert.match(calls[0]!.text, /owner_organization_id/); assert.match(calls[0]!.text, /aggregate_type/);
-  assert.deepEqual(calls[1]!.values, [owner, 4, 10]);
+  assert.deepEqual(calls[1]!.values, [owner, '4', 10]);
+});
+
+test('listSince binds canonical precision-safe cursor strings and accepts returned sequence', async () => {
+  const calls: Array<{ values: readonly unknown[] | undefined }> = [];
+  const executor: SqlExecutor = { query: async <T>(_text: string, values?: readonly unknown[]) => { calls.push({ values }); return { rows: [row('9007199254740993') as T], rowCount: 1 }; } };
+  const store = new EventStore(executor);
+  const events = await store.listSince(owner, '0009007199254740993', 10);
+  await store.listSince(owner, events[0]!.sequence, 10);
+  await store.listSince(owner, 9007199254740993n, 10);
+  assert.deepEqual(calls.map(c => c.values), [[owner, '9007199254740993', 10], [owner, '9007199254740993', 10], [owner, '9007199254740993', 10]]);
+});
+
+test('listSince rejects unsafe numeric and malformed cursors', async () => {
+  const executor: SqlExecutor = { query: async () => ({ rows: [], rowCount: 0 }) };
+  const store = new EventStore(executor);
+  await assert.rejects(() => store.listSince(owner, Number.MAX_SAFE_INTEGER + 1), /cursor/);
+  await assert.rejects(() => store.listSince(owner, '-1'), /cursor/);
+  await assert.rejects(() => store.listSince(owner, '1.2'), /cursor/);
 });
 
 test('malformed owner id is rejected before SQL execution', async () => {
@@ -68,6 +86,7 @@ test('append rejects malformed optional fields before SQL', async () => {
   let calls = 0; const executor: SqlExecutor = { query: async () => { calls++; return { rows: [], rowCount: 0 }; } };
   await assert.rejects(() => new EventStore(executor).append({ ...input, causationId: 'bad' }), /causationId/);
   await assert.rejects(() => new EventStore(executor).append({ ...input, occurredAt: 'bad-date' }), /occurredAt/);
+  await assert.rejects(() => new EventStore(executor).append({ ...input, idempotencyKey: '' }), /idempotencyKey/);
   assert.equal(calls, 0);
 });
 
