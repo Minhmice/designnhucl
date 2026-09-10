@@ -37,3 +37,9 @@ Fix verification: `npm run build` passed; focused control-plane tests passed (3)
 Migration execution now acquires one dedicated pool client for advisory lock, metadata, DDL, commit/rollback, and unlock. PostgreSQL tests use a per-run temporary schema and cover idempotent migration, UUIDv7 generation, cross-tenant RLS visibility, and rollback cleanup. The organization owner self-FK is deferred initially to permit root owner insertion while preserving the owner=id invariant.
 
 Verification: focused control-plane tests 3 passed, 1 skipped; full `npm test` 88 passed, 1 skipped, 0 failed.
+
+## Review fix round 3
+
+RLS integration operations now run inside explicit BEGIN/set_config/operation/COMMIT transactions on one client. Removed the tautological organization check while retaining the deferred owner self-FK and owner-id invariant.
+
+Verification: `npm run build` and focused control-plane tests passed (3), PostgreSQL skipped explicitly; full `npm test` passed (88), skipped 1, failed 0.

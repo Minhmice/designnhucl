@@ -2,7 +2,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 DO $$ BEGIN CREATE TYPE agent_state AS ENUM ('queued','leased','running','waiting_approval','blocked','succeeded','failed','cancelled','stale'); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 DO $$ BEGIN CREATE TYPE extractor_type AS ENUM ('deterministic','model','human'); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 DO $$ BEGIN CREATE TYPE fact_status AS ENUM ('candidate','accepted','conflicted','rejected'); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
-CREATE TABLE IF NOT EXISTS organizations (id uuid PRIMARY KEY DEFAULT uuidv7(), owner_organization_id uuid NOT NULL, name text NOT NULL, created_at timestamptz NOT NULL DEFAULT now(), CHECK ((id = owner_organization_id) OR id <> owner_organization_id), CONSTRAINT organizations_owner_fk FOREIGN KEY (owner_organization_id) REFERENCES organizations(id) DEFERRABLE INITIALLY DEFERRED);
+CREATE TABLE IF NOT EXISTS organizations (id uuid PRIMARY KEY DEFAULT uuidv7(), owner_organization_id uuid NOT NULL, name text NOT NULL, created_at timestamptz NOT NULL DEFAULT now(), CONSTRAINT organizations_owner_fk FOREIGN KEY (owner_organization_id) REFERENCES organizations(id) DEFERRABLE INITIALLY DEFERRED);
 ALTER TABLE organizations ENABLE ROW LEVEL SECURITY; ALTER TABLE organizations FORCE ROW LEVEL SECURITY;
 CREATE POLICY organizations_tenant ON organizations USING (owner_organization_id = NULLIF(current_setting('app.owner_organization_id', true),'')::uuid);
 CREATE TABLE IF NOT EXISTS organization_aliases (id uuid PRIMARY KEY DEFAULT uuidv7(), owner_organization_id uuid NOT NULL, organization_id uuid NOT NULL REFERENCES organizations(id), alias text NOT NULL, normalized_alias text NOT NULL);
