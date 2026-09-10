@@ -5,6 +5,18 @@ DO $$ BEGIN CREATE TYPE fact_status AS ENUM ('candidate','accepted','conflicted'
 CREATE TABLE IF NOT EXISTS organizations (id uuid PRIMARY KEY DEFAULT uuidv7(), owner_organization_id uuid NOT NULL, name text NOT NULL, created_at timestamptz NOT NULL DEFAULT now(), CONSTRAINT organizations_owner_fk FOREIGN KEY (owner_organization_id) REFERENCES organizations(id) DEFERRABLE INITIALLY DEFERRED);
 ALTER TABLE organizations ENABLE ROW LEVEL SECURITY; ALTER TABLE organizations FORCE ROW LEVEL SECURITY;
 CREATE POLICY organizations_tenant ON organizations USING (owner_organization_id = NULLIF(current_setting('app.owner_organization_id', true),'')::uuid);
+CREATE OR REPLACE FUNCTION enforce_organization_owner_invariant() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NEW.owner_organization_id = NEW.id THEN RETURN NEW; END IF;
+  IF NOT EXISTS (SELECT 1 FROM organizations o WHERE o.id = NEW.owner_organization_id AND o.owner_organization_id = o.id) THEN
+    RAISE EXCEPTION 'owner organization % must self-own', NEW.owner_organization_id;
+  END IF;
+  RETURN NEW;
+END $$;
+;
+DROP TRIGGER IF EXISTS organizations_owner_invariant ON organizations;
+CREATE CONSTRAINT TRIGGER organizations_owner_invariant AFTER INSERT OR UPDATE OF owner_organization_id ON organizations
+DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION enforce_organization_owner_invariant();
 CREATE TABLE IF NOT EXISTS organization_aliases (id uuid PRIMARY KEY DEFAULT uuidv7(), owner_organization_id uuid NOT NULL, organization_id uuid NOT NULL REFERENCES organizations(id), alias text NOT NULL, normalized_alias text NOT NULL);
 CREATE TABLE IF NOT EXISTS legal_entities (id uuid PRIMARY KEY DEFAULT uuidv7(), owner_organization_id uuid NOT NULL, organization_id uuid NOT NULL REFERENCES organizations(id), legal_name text NOT NULL, jurisdiction text, registration_id text);
 CREATE TABLE IF NOT EXISTS sources (id uuid PRIMARY KEY DEFAULT uuidv7(), owner_organization_id uuid NOT NULL, uri text NOT NULL, retrieved_at timestamptz NOT NULL DEFAULT now());

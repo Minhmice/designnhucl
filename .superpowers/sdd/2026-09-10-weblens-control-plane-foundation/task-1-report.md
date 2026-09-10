@@ -43,3 +43,16 @@ Verification: focused control-plane tests 3 passed, 1 skipped; full `npm test` 8
 RLS integration operations now run inside explicit BEGIN/set_config/operation/COMMIT transactions on one client. Removed the tautological organization check while retaining the deferred owner self-FK and owner-id invariant.
 
 Verification: `npm run build` and focused control-plane tests passed (3), PostgreSQL skipped explicitly; full `npm test` passed (88), skipped 1, failed 0.
+
+## Review fix round 4
+
+Fixed the configured PostgreSQL rollback case to establish tenant context before inserting, verify the insert succeeds, roll back, and verify the rolled-back row is absent under the tenant context. Added a deferred constraint trigger enforcing that every subject organization points to a self-owning root organization, while allowing root owner insertion (`owner_organization_id = id`) and preserving the deferred self-FK.
+
+Verification:
+
+- `npm run build` — passed (`tsc -p tsconfig.json`).
+- `node --test dist/tests/control-plane-database.test.js dist/tests/control-plane-postgres.test.js` — 3 passed, 1 skipped (WEBLENS_PG_TEST_URL not configured).
+- `npm test` — 88 passed, 1 skipped, 0 failed (89 tests; 49.979s).
+- `git diff --check` — clean.
+
+PostgreSQL live integration remains explicitly skipped because `WEBLENS_PG_TEST_URL` is not configured; the trigger will be exercised when PostgreSQL 18 integration is available.

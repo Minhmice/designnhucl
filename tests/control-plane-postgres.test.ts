@@ -16,7 +16,11 @@ test('PostgreSQL control-plane integration (requires WEBLENS_PG_TEST_URL)', { sk
       await c.query('begin'); await c.query("select set_config('app.owner_organization_id',$1,true)", [ownerA]); await c.query('insert into sources(owner_organization_id,uri) values ($1,$2)', [ownerA,'a']);
       assert.equal((await c.query('select count(*)::int n from sources')).rows[0].n, 1); await c.query('commit');
       await c.query('begin'); await c.query("select set_config('app.owner_organization_id',$1,true)", [ownerB]); assert.equal((await c.query('select count(*)::int n from sources')).rows[0].n, 0); await c.query('commit');
-      await c.query('begin'); await c.query('insert into sources(owner_organization_id,uri) values ($1,$2)', [ownerB,'rollback']); await c.query('rollback'); assert.equal((await c.query('select count(*)::int n from sources')).rows[0].n, 0);
+      await c.query('begin'); await c.query("select set_config('app.owner_organization_id',$1,true)", [ownerB]);
+      await c.query('insert into sources(owner_organization_id,uri) values ($1,$2)', [ownerB,'rollback']);
+      await c.query('rollback');
+      await c.query('begin'); await c.query("select set_config('app.owner_organization_id',$1,true)", [ownerB]);
+      assert.equal((await c.query("select count(*)::int n from sources where uri = 'rollback'")).rows[0].n, 0); await c.query('commit');
     } finally { c.release(); }
   } finally { await pool.query(`drop schema if exists ${schema} cascade`); await pool.end(); }
 });
