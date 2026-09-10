@@ -42,9 +42,9 @@ export class IdentityRepository {
           optionalUuid('id', input.id);
           for (const key of ['alias', 'address', 'domain', 'legalName', 'name', 'predicate', 'role', 'channelType', 'consentStatus', 'status'] as const) if (key in input && typeof input[key] === 'string' && !(input[key] as string).trim()) throw new Error(`Invalid ${key}`);
           if (input.outreachAllowed === true && (input.doNotContact === true || !['granted', 'opt-in', 'opted_in', 'explicit'].includes(String(input.consentStatus).toLowerCase()) || !String(input.permissionReason ?? '').trim())) throw new Error('Outreach forbidden without explicit consent');
-          if (prop === 'appendFact' || prop === 'recordFact') { const p = String(input.predicate ?? '').toLowerCase(); if (/legal|registration|tax/.test(p) && input.sourceKind !== 'registry') throw new Error('Registry source required for legal facts'); if (/executive|ceo|representative/.test(p) && input.sourceKind !== 'company') throw new Error('Company source required for executive facts'); }
+          if (prop === 'appendFact' || prop === 'recordFact') { const p = String(input.predicate ?? '').toLowerCase(); if (/legal|registration|tax/.test(p) && (input.sourceKind !== 'registry' || !input.sourceId)) throw new Error('Registry source and sourceId required for legal facts'); if (/executive|ceo|representative/.test(p) && (input.sourceKind !== 'company' || !input.sourceId)) throw new Error('Company source and sourceId required for executive facts'); }
         }
-        if (prop === 'createSource' && input?.sourceKind !== undefined) return target.createSourceWithKind(args[0] as string, input as never);
+        if ((prop === 'createSource' || prop === 'recordSource') && input?.sourceKind !== undefined) return target.createSourceWithKind(args[0] as string, input as never);
         return (value as (...a: unknown[]) => unknown).apply(target, args);
       });
     } }) as this;

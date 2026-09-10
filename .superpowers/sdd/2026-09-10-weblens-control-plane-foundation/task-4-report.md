@@ -34,3 +34,7 @@ Implemented tenant-safe identity/provenance repositories in `src/control-plane/i
 - Added ordered migration `002_identity_provenance.sql` introducing `source_kind` (`registry|company|other`) and source-kind API support.
 - Added explicit consent-status and legal/executive predicate provenance guards, plus presence-based optional-field validation through the repository boundary.
 - Fallback joins now inject owner predicates for aliases and facts and reject a single fallback signal; exact/legal/domain precedence remains unchanged.
+
+## Review round 3
+
+- Source-kind aliases now preserve `sourceKind`; provenance predicates require an explicit source ID and matching registry/company kind at the API guard.
