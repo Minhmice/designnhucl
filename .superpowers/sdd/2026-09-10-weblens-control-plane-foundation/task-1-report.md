@@ -65,7 +65,7 @@ Added live assertions for one recorded migration and checksum-preserving idempot
 
 Verification:
 
-- Commit: `a65e984` (`test(control-plane): secure postgres bootstrap`).
+- Commits: `a65e984` (`test(control-plane): secure postgres bootstrap`), `a480a7a` (`fix(control-plane): parameterize rollback assertion`).
 - `npm run build` — passed (`tsc -p tsconfig.json`).
 - `node --test dist/tests/control-plane-database.test.js dist/tests/control-plane-postgres.test.js` — 3 passed, 1 skipped (`WEBLENS_PG_TEST_URL` is not configured).
 - `npm test` — 88 passed, 1 skipped, 0 failed (89 tests; 50.009s).
