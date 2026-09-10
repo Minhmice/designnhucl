@@ -1,4 +1,4 @@
-import type { SqlExecutor, Transaction } from './database.js';
+import type { SqlExecutor } from './database.js';
 
 export interface EventInput {
   ownerOrganizationId: string; aggregateType: string; aggregateId: string; eventType: string;
@@ -13,7 +13,11 @@ function validate(input: EventInput): Required<Pick<EventInput, 'ownerOrganizati
   if (!UUID.test(input.aggregateId)) throw new Error('Invalid aggregateId');
   for (const key of ['aggregateType', 'eventType'] as const) if (!input[key] || input[key].length > 200) throw new Error(`Invalid ${key}`);
   if (input.eventVersion !== undefined && (!Number.isInteger(input.eventVersion) || input.eventVersion < 1)) throw new Error('Invalid eventVersion');
+  if (input.payload === undefined || input.payload === null) throw new Error('Invalid payload');
   try { JSON.stringify(input.payload); } catch { throw new Error('Invalid payload'); }
+  for (const key of ['actor', 'traceId', 'idempotencyKey'] as const) if (input[key] !== undefined && typeof input[key] !== 'string') throw new Error(`Invalid ${key}`);
+  for (const key of ['causationId', 'correlationId'] as const) if (input[key] !== undefined && !UUID.test(input[key]!)) throw new Error(`Invalid ${key}`);
+  if (input.occurredAt !== undefined && Number.isNaN(new Date(input.occurredAt).getTime())) throw new Error('Invalid occurredAt');
   return input as Required<Pick<EventInput, 'ownerOrganizationId'|'aggregateType'|'aggregateId'|'eventType'>> & EventInput;
 }
 
@@ -31,6 +35,11 @@ function mapRow(row: Record<string, unknown>): DomainEvent {
   }
   return event;
 }
+function canonical(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
+  if (value && typeof value === 'object') return `{${Object.keys(value as Record<string, unknown>).sort().map(k => `${JSON.stringify(k)}:${canonical((value as Record<string, unknown>)[k])}`).join(',')}}`;
+  return JSON.stringify(value);
+}
 
 export class EventStore {
   constructor(private readonly executor: SqlExecutor) {}
@@ -38,20 +47,24 @@ export class EventStore {
   async appendInTransaction(executor: SqlExecutor, raw: EventInput): Promise<DomainEvent> {
     const input = validate(raw);
     const values = [input.ownerOrganizationId, input.aggregateId, input.aggregateType, input.eventType, input.eventVersion ?? 1, input.payload, input.occurredAt, input.actor, input.traceId, input.causationId, input.correlationId, input.idempotencyKey];
-    const result = await executor.query<Record<string, unknown>>(`WITH next AS (INSERT INTO event_counters (owner_organization_id, next_sequence) VALUES ($1, 1) ON CONFLICT (owner_organization_id) DO UPDATE SET next_sequence = event_counters.next_sequence + 1 RETURNING next_sequence), inserted AS (INSERT INTO domain_events (owner_organization_id, sequence, aggregate_id, aggregate_type, event_type, event_version, payload, occurred_at, actor, trace_id, causation_id, correlation_id, idempotency_key) SELECT $1, next_sequence, $2, $3, $4, $5, $6::jsonb, COALESCE($7::timestamptz, now()), $8, $9, $10, $11, $12 FROM next ON CONFLICT (owner_organization_id, idempotency_key) DO NOTHING RETURNING *) SELECT * FROM inserted`, values);
-    if (result.rows.length) return mapRow(result.rows[0]!);
+    const result = await executor.query<Record<string, unknown>>(`WITH existing AS (SELECT * FROM domain_events WHERE owner_organization_id = $1 AND idempotency_key = $12), next AS (INSERT INTO event_counters (owner_organization_id, next_sequence) SELECT $1, 1 WHERE NOT EXISTS (SELECT 1 FROM existing) ON CONFLICT (owner_organization_id) DO UPDATE SET next_sequence = event_counters.next_sequence + 1 RETURNING next_sequence), inserted AS (INSERT INTO domain_events (owner_organization_id, sequence, aggregate_id, aggregate_type, event_type, event_version, payload, occurred_at, actor, trace_id, causation_id, correlation_id, idempotency_key) SELECT $1, next_sequence, $2, $3, $4, $5, $6::jsonb, COALESCE($7::timestamptz, now()), $8, $9, $10, $11, $12 FROM next ON CONFLICT (owner_organization_id, idempotency_key) DO NOTHING RETURNING *) SELECT * FROM inserted UNION ALL SELECT * FROM existing`, values);
+    if (result.rows.length) {
+      const event = mapRow(result.rows[0]!);
+      if (!input.idempotencyKey || (event.aggregateId === input.aggregateId && event.aggregateType === input.aggregateType && event.eventType === input.eventType && event.eventVersion === (input.eventVersion ?? 1) && canonical(event.payload) === canonical(input.payload))) return event;
+      throw new Error('Idempotency key conflict');
+    }
     if (input.idempotencyKey) {
       const existing = await executor.query<Record<string, unknown>>('SELECT * FROM domain_events WHERE owner_organization_id = $1 AND idempotency_key = $2', [input.ownerOrganizationId, input.idempotencyKey]);
       if (existing.rows.length) {
         const event = mapRow(existing.rows[0]!);
-        if (event.aggregateId === input.aggregateId && event.aggregateType === input.aggregateType && event.eventType === input.eventType && event.eventVersion === (input.eventVersion ?? 1) && JSON.stringify(event.payload) === JSON.stringify(input.payload)) return event;
+        if (event.aggregateId === input.aggregateId && event.aggregateType === input.aggregateType && event.eventType === input.eventType && event.eventVersion === (input.eventVersion ?? 1) && canonical(event.payload) === canonical(input.payload)) return event;
         throw new Error('Idempotency key conflict');
       }
     }
     throw new Error('Event append failed');
   }
   async listByAggregate(ownerOrganizationId: string, aggregateType: string, aggregateId: string): Promise<DomainEvent[]> {
-    if (!UUID.test(ownerOrganizationId) || !UUID.test(aggregateId)) throw new Error('Invalid tenant or aggregate id');
+    if (!UUID.test(ownerOrganizationId) || !UUID.test(aggregateId) || !aggregateType || aggregateType.length > 200) throw new Error('Invalid tenant or aggregate id');
     const r = await this.executor.query<Record<string, unknown>>('SELECT * FROM domain_events WHERE owner_organization_id = $1 AND aggregate_type = $2 AND aggregate_id = $3 ORDER BY sequence ASC', [ownerOrganizationId, aggregateType, aggregateId]);
     return r.rows.map(mapRow);
   }

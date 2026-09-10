@@ -56,3 +56,17 @@ test('conflicting idempotency-key reuse throws without issuing a second append',
   await assert.rejects(() => new EventStore(executor).append({ ...input, idempotencyKey: 'request-1' }), /Idempotency key conflict/);
   assert.equal(calls, 2);
 });
+
+test('idempotency payload comparison follows JSON object semantics', async () => {
+  const existing = { ...row(), idempotencyKey: 'request-2', payload: { a: 1, b: 2 } };
+  const executor: SqlExecutor = { query: async <T>() => ({ rows: [existing] as T[], rowCount: 1 }) };
+  const result = await new EventStore(executor).append({ ...input, idempotencyKey: 'request-2', payload: { b: 2, a: 1 } });
+  assert.equal(result.id, existing.id);
+});
+
+test('append rejects malformed optional fields before SQL', async () => {
+  let calls = 0; const executor: SqlExecutor = { query: async () => { calls++; return { rows: [], rowCount: 0 }; } };
+  await assert.rejects(() => new EventStore(executor).append({ ...input, causationId: 'bad' }), /causationId/);
+  await assert.rejects(() => new EventStore(executor).append({ ...input, occurredAt: 'bad-date' }), /occurredAt/);
+  assert.equal(calls, 0);
+});
