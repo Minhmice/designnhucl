@@ -9,12 +9,13 @@ export interface DomainEvent extends EventInput { id: string; sequence: number; 
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 function validate(input: EventInput): Required<Pick<EventInput, 'ownerOrganizationId'|'aggregateType'|'aggregateId'|'eventType'>> & EventInput {
+  if (typeof input.ownerOrganizationId !== 'string' || typeof input.aggregateType !== 'string' || typeof input.aggregateId !== 'string' || typeof input.eventType !== 'string') throw new Error('Invalid event identity');
   if (!UUID.test(input.ownerOrganizationId)) throw new Error('Invalid ownerOrganizationId');
   if (!UUID.test(input.aggregateId)) throw new Error('Invalid aggregateId');
   for (const key of ['aggregateType', 'eventType'] as const) if (!input[key] || input[key].length > 200) throw new Error(`Invalid ${key}`);
   if (input.eventVersion !== undefined && (!Number.isInteger(input.eventVersion) || input.eventVersion < 1)) throw new Error('Invalid eventVersion');
-  if (input.payload === undefined || input.payload === null) throw new Error('Invalid payload');
-  try { JSON.stringify(input.payload); } catch { throw new Error('Invalid payload'); }
+  if (input.payload === undefined || input.payload === null || typeof input.payload === 'function' || typeof input.payload === 'symbol' || typeof input.payload === 'bigint') throw new Error('Invalid payload');
+  try { if (JSON.stringify(input.payload) === undefined) throw new Error(); } catch { throw new Error('Invalid payload'); }
   for (const key of ['actor', 'traceId', 'idempotencyKey'] as const) if (input[key] !== undefined && typeof input[key] !== 'string') throw new Error(`Invalid ${key}`);
   for (const key of ['causationId', 'correlationId'] as const) if (input[key] !== undefined && !UUID.test(input[key]!)) throw new Error(`Invalid ${key}`);
   if (input.occurredAt !== undefined && Number.isNaN(new Date(input.occurredAt).getTime())) throw new Error('Invalid occurredAt');
@@ -47,7 +48,7 @@ export class EventStore {
   async appendInTransaction(executor: SqlExecutor, raw: EventInput): Promise<DomainEvent> {
     const input = validate(raw);
     const values = [input.ownerOrganizationId, input.aggregateId, input.aggregateType, input.eventType, input.eventVersion ?? 1, input.payload, input.occurredAt, input.actor, input.traceId, input.causationId, input.correlationId, input.idempotencyKey];
-    const result = await executor.query<Record<string, unknown>>(`WITH existing AS (SELECT * FROM domain_events WHERE owner_organization_id = $1 AND idempotency_key = $12), next AS (INSERT INTO event_counters (owner_organization_id, next_sequence) SELECT $1, 1 WHERE NOT EXISTS (SELECT 1 FROM existing) ON CONFLICT (owner_organization_id) DO UPDATE SET next_sequence = event_counters.next_sequence + 1 RETURNING next_sequence), inserted AS (INSERT INTO domain_events (owner_organization_id, sequence, aggregate_id, aggregate_type, event_type, event_version, payload, occurred_at, actor, trace_id, causation_id, correlation_id, idempotency_key) SELECT $1, next_sequence, $2, $3, $4, $5, $6::jsonb, COALESCE($7::timestamptz, now()), $8, $9, $10, $11, $12 FROM next ON CONFLICT (owner_organization_id, idempotency_key) DO NOTHING RETURNING *) SELECT * FROM inserted UNION ALL SELECT * FROM existing`, values);
+    const result = await executor.query<Record<string, unknown>>(`WITH locked AS (SELECT pg_advisory_xact_lock(hashtextextended($1 || ':' || COALESCE($12,''), 0))), existing AS (SELECT * FROM domain_events, locked WHERE owner_organization_id = $1 AND idempotency_key = $12), next AS (INSERT INTO event_counters (owner_organization_id, next_sequence) SELECT $1, 1 WHERE NOT EXISTS (SELECT 1 FROM existing) ON CONFLICT (owner_organization_id) DO UPDATE SET next_sequence = event_counters.next_sequence + 1 RETURNING next_sequence), inserted AS (INSERT INTO domain_events (owner_organization_id, sequence, aggregate_id, aggregate_type, event_type, event_version, payload, occurred_at, actor, trace_id, causation_id, correlation_id, idempotency_key) SELECT $1, next_sequence, $2, $3, $4, $5, $6::jsonb, COALESCE($7::timestamptz, now()), $8, $9, $10, $11, $12 FROM next ON CONFLICT (owner_organization_id, idempotency_key) DO NOTHING RETURNING *) SELECT * FROM inserted UNION ALL SELECT * FROM existing`, values);
     if (result.rows.length) {
       const event = mapRow(result.rows[0]!);
       if (!input.idempotencyKey || (event.aggregateId === input.aggregateId && event.aggregateType === input.aggregateType && event.eventType === input.eventType && event.eventVersion === (input.eventVersion ?? 1) && canonical(event.payload) === canonical(input.payload))) return event;
