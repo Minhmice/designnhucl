@@ -161,3 +161,24 @@ Selectors remove matching content from persisted DOM evidence and mask its scree
 Scores are deterministic transforms of anchored 0–4 judge ratings, but model judgments still require benchmark calibration. Lighthouse is lab performance only; TBT is not renamed INP. Axe findings are audit evidence, not WCAG conformance. Lead opportunity combines quality deficiency with separately supplied commercial fit, fixability, and activity. See [Evaluation principles](docs/evaluation-principles.md) and the [pilot report template](docs/pilot-report.md).
 
 No public-business crawl, outreach, paid benchmark, or staging screenshot upload is performed by the default test suite.
+
+## Control-plane foundation (opt-in)
+
+The additive `src/control-plane/index.ts` entry point exports the durable control-plane APIs: `PgDatabase`/migration helpers, tenant-scoped `EventStore`, `AgentRunStore`, `IdentityRepository`, and the `EvaluationService` WebLens adapter. Importing this module does not change the legacy CLI or enable public capture.
+
+The PostgreSQL path targets PostgreSQL 18. Set `WEBLENS_PG_URL` for the migration command (or `WEBLENS_PG_TEST_URL` for the opt-in integration test), then run:
+
+```powershell
+npm run build
+$env:WEBLENS_PG_URL = "postgres://..."
+npm run db:migrate
+# only when a disposable PostgreSQL 18 test database is available
+$env:WEBLENS_PG_TEST_URL = "postgres://..."
+npm run test:postgres
+```
+
+Migrations are append-only and ordered (`001_control_plane`, `002_identity_provenance`, `003_identity_normalization`, `004_evaluation_adapter`, `005_evaluation_subject`). Tenant tables use row-level security; an application role must set the transaction-local `app.owner_organization_id` through `PgDatabase.withTenant()`. Bootstrap the owner organization in an explicitly tenant-scoped transaction before creating subject organizations, web properties, sources, or facts. Keep owner and subject IDs distinct.
+
+The adapter records only the WebLens artifact URI, SHA-256 hashes, and a bounded `{ score, reason }` projection. WebLens remains the evidence source of truth; screenshots, DOM, prompts, judge payloads, and provider errors are not copied into control-plane rows. A worker crash is `unknown` and requires paid-evaluator reconciliation, never an automatic rerun. Registry/company source provenance and consent/do-not-contact guards are enforced before facts or outreach permissions are persisted.
+
+See [the control-plane foundation guide](docs/control-plane-foundation.md) for RLS/bootstrap details, stale-run recovery, and the deliberately deferred roadmap.

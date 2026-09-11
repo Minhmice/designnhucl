@@ -209,8 +209,8 @@ export class IdentityRepository {
           SELECT f.subject_id AS organization_id, 'address'::text AS signal_type
             FROM facts f
            WHERE f.owner_organization_id = $1 AND f.subject_type = 'organization' AND $4::text IS NOT NULL
-             AND regexp_replace(lower(trim(f.value->>'value')), '\\s+', ' ', 'g') = $4
-             AND regexp_replace(lower(trim(f.predicate)), '\\s+', ' ', 'g') IN ('address', 'registered address', 'headquarters address')
+             AND regexp_replace(lower(trim(f.value->>'value')), E'\\\\s+', ' ', 'g') = $4
+             AND regexp_replace(lower(trim(f.predicate)), E'\\\\s+', ' ', 'g') IN ('address', 'registered address', 'headquarters address')
            GROUP BY f.subject_id
         ), aggregated AS (
           SELECT organization_id, COUNT(DISTINCT signal_type) AS signal_count
