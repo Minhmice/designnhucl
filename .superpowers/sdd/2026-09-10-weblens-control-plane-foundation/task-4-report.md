@@ -44,3 +44,16 @@ Implemented tenant-safe identity/provenance repositories in `src/control-plane/i
 - Added owner-scoped preflight checks for referenced organizations, people, sources, and role/contact relationships before mutation dispatch.
 - Provenance-sensitive facts now validate the persisted `sources.source_kind` row under the owner tenant; caller-supplied source kind is not trusted.
 - Build passes after the changes. Full `npm test` was attempted but did not emit completion output in the allotted wait window.
+
+## Review round 5
+
+- Provenance-sensitive facts now reject a missing `sourceId` before opening the owner transaction, then read the persisted, owner-scoped source row inside the same mutation transaction. Legal/registration/tax predicates require `registry`; executive/CEO/representative predicates require `company`.
+- All known fact subject aggregates (organization, person, source, legal entity, role, contact channel, web property, and alias) use a fixed owner-scoped preflight lookup in the same transaction as the append. Cross-owner rows are invisible to that lookup and no insert is issued.
+- Replaced fallback signal arithmetic with a tenant-scoped `candidate_signals` aggregate. It counts `DISTINCT` alias/domain/address signal kinds, so duplicate evidence cannot inflate corroboration. Exactly one candidate with at least two independent kinds resolves; multiple are ambiguous; none is unresolved. Address evidence is restricted to address predicates.
+- Application normalization remains NFKC + trim + whitespace-collapse + lowercase. The normalization migration no longer calls a non-portable PostgreSQL function while backfilling existing display values.
+
+## Verification
+
+- `npm run build` — passed.
+- `node --test dist/tests/control-plane-identity.test.js` — passed (45/45).
+- `npm test` — passed.

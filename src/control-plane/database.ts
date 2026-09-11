@@ -54,5 +54,6 @@ export async function loadMigrations(): Promise<Migration[]> {
   const { fileURLToPath } = await import('node:url');
   const sql = await readFile(fileURLToPath(new URL('./sql/001_control_plane.sql', import.meta.url)), 'utf8');
   const identity = await readFile(fileURLToPath(new URL('./sql/002_identity_provenance.sql', import.meta.url)), 'utf8');
-  return [{ version: '001_control_plane', sql }, { version: '002_identity_provenance', sql: identity }];
+  const normalization = await readFile(fileURLToPath(new URL('./sql/003_identity_normalization.sql', import.meta.url)), 'utf8');
+  return [{ version: '001_control_plane', sql }, { version: '002_identity_provenance', sql: identity }, { version: '003_identity_normalization', sql: normalization }];
 }
