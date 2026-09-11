@@ -13,9 +13,9 @@
     "test:contracts": "npm run build && node --test dist/tests/contracts.test.js",
     "test:network": "npm run build && node --test dist/tests/network.test.js",
     "test:policies": "npm run build && node --test dist/tests/scoring.test.js dist/tests/lead.test.js dist/tests/critic.test.js",
-    "test:e2e": "npm run build && node --test dist/tests/e2e.test.js"
-    ,"db:migrate": "node dist/src/control-plane/cli.js"
-    ,"test:postgres": "npm run build && node --test dist/tests/control-plane-postgres.test.js"
+    "test:e2e": "npm run build && node --test dist/tests/e2e.test.js",
+    "db:migrate": "node dist/src/control-plane/cli.js",
+    "test:postgres": "npm run build && node --test dist/tests/control-plane-postgres.test.js"
   },
   "engines": {
     "node": ">=24"
@@ -26,10 +26,10 @@
     "graphile-worker": "^0.18.0",
     "ip-address": "10.7.0",
     "lighthouse": "13.4.1",
-    "openai": "7.10.0",
+    "openai": "7.15.0",
     "pg": "^8.23.0",
     "playwright": "1.63.0",
-    "zod": "4.5.4"
+    "zod": "4.6.2"
   },
   "devDependencies": {
     "@types/node": "26.5.0",
