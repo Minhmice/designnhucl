@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import pg from 'pg';
 import { migrate } from '../src/control-plane/migrations.js';
+import { loadMigrations } from '../src/control-plane/database.js';
 const url = process.env.WEBLENS_PG_TEST_URL;
 test('PostgreSQL control-plane integration (requires WEBLENS_PG_TEST_URL)', { skip: !url ? 'WEBLENS_PG_TEST_URL is not configured' : false }, async () => {
   if (!url) return;
@@ -15,10 +16,15 @@ test('PostgreSQL control-plane integration (requires WEBLENS_PG_TEST_URL)', { sk
 
       await migrate(c);
       const firstMigrations = await c.query<{ version: string; checksum: string }>('select version, checksum from control_plane_migrations order by version');
-      assert.equal(firstMigrations.rows.length, 1, 'one migration should be recorded');
+      assert.equal(firstMigrations.rows.length, (await loadMigrations()).length, 'all ordered migrations should be recorded');
       await migrate(c);
       const secondMigrations = await c.query<{ version: string; checksum: string }>('select version, checksum from control_plane_migrations order by version');
       assert.deepEqual(secondMigrations.rows, firstMigrations.rows, 'reapplying migrations must be a no-op');
+      const evaluationColumns = await c.query<{ table_name: string; column_name: string }>(
+        `select table_name, column_name from information_schema.columns where table_schema = $1 and table_name in ('evaluation_requests','evaluation_references') and column_name = 'subject_organization_id'`,
+        [schema],
+      );
+      assert.deepEqual(evaluationColumns.rows.map(row => row.table_name).sort(), ['evaluation_references', 'evaluation_requests']);
 
       const ownerA = '11111111-1111-7111-8111-111111111111';
       const ownerB = '22222222-2222-7222-8222-222222222222';

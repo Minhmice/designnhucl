@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { dirname, resolve } from 'node:path';
 
 export interface SqlQueryResult<T = Record<string, unknown>> { rows: T[]; rowCount: number | null }
 export interface SqlExecutor { query<T = Record<string, unknown>>(text: string, values?: readonly unknown[]): Promise<SqlQueryResult<T>> }
@@ -52,8 +53,26 @@ export async function runMigrations(executor: SqlExecutor, migrations: readonly 
 export async function loadMigrations(): Promise<Migration[]> {
   const { readFile } = await import('node:fs/promises');
   const { fileURLToPath } = await import('node:url');
-  const sql = await readFile(fileURLToPath(new URL('./sql/001_control_plane.sql', import.meta.url)), 'utf8');
-  const identity = await readFile(fileURLToPath(new URL('./sql/002_identity_provenance.sql', import.meta.url)), 'utf8');
-  const normalization = await readFile(fileURLToPath(new URL('./sql/003_identity_normalization.sql', import.meta.url)), 'utf8');
-  return [{ version: '001_control_plane', sql }, { version: '002_identity_provenance', sql: identity }, { version: '003_identity_normalization', sql: normalization }];
+  const moduleDirectory = dirname(fileURLToPath(import.meta.url));
+  const readMigration = async (name: string): Promise<string> => {
+    try { return await readFile(fileURLToPath(new URL(`./sql/${name}`, import.meta.url)), 'utf8'); }
+    catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
+      for (const sourcePath of [
+        resolve(moduleDirectory, '..', '..', '..', 'src', 'control-plane', 'sql', name),
+        resolve(moduleDirectory, '..', '..', 'src', 'control-plane', 'sql', name),
+        resolve(process.cwd(), 'src', 'control-plane', 'sql', name),
+      ]) {
+        try { return await readFile(sourcePath, 'utf8'); }
+        catch (sourceError) { if ((sourceError as NodeJS.ErrnoException).code !== 'ENOENT') throw sourceError; }
+      }
+      throw error;
+    }
+  };
+  const sql = await readMigration('001_control_plane.sql');
+  const identity = await readMigration('002_identity_provenance.sql');
+  const normalization = await readMigration('003_identity_normalization.sql');
+  const evaluationAdapter = await readMigration('004_evaluation_adapter.sql');
+  const evaluationSubject = await readMigration('005_evaluation_subject.sql');
+  return [{ version: '001_control_plane', sql }, { version: '002_identity_provenance', sql: identity }, { version: '003_identity_normalization', sql: normalization }, { version: '004_evaluation_adapter', sql: evaluationAdapter }, { version: '005_evaluation_subject', sql: evaluationSubject }];
 }
