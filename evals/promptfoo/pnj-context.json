@@ -1,0 +1,11 @@
+{
+  "objective": "Giúp người dùng tìm hiểu, đánh giá và mua sản phẩm trang sức.",
+  "audience": "Người tiêu dùng Việt Nam mua sắm trang sức.",
+  "locale": "vi-VN",
+  "archetypeHint": "ecommerce",
+  "primaryAction": "Xem hoặc mua sản phẩm trang sức.",
+  "routes": ["/"],
+  "requirements": [],
+  "referenceIds": [],
+  "qualityReview": null
+}

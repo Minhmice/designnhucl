@@ -1,0 +1,149 @@
+{
+  "provenance": {
+    "schemaVersion": 1,
+    "metricVersion": "meta-eval-v1",
+    "mode": "pipeline-consistency",
+    "sampleCount": 10,
+    "runIds": [
+      "0c152f78-fbde-4f82-862e-a6f38637a060",
+      "775d094d-6a1a-48b4-ba89-afb1dcf046a4",
+      "bdfc71f0-ec76-4610-81b3-514d5dea689f",
+      "ae514963-0548-4c61-8f2c-2b4ad7afe85e",
+      "cec35d2a-dab9-43ef-b53d-fdb9c83b5596",
+      "6673967f-646a-4595-a262-0dc7e10ba67c",
+      "fe9fb124-02fb-423c-a702-c18a2a9b9f56",
+      "9133c8f4-ff77-4495-a569-ace38bc78067",
+      "c4a7c887-5b7b-4450-b64a-a018a8594f31",
+      "9d253910-795e-444b-b64c-9319b982140a"
+    ],
+    "evidenceHashes": [],
+    "model": null,
+    "provider": null,
+    "promptVersion": null,
+    "rubricVersion": null,
+    "createdAt": "2026-09-12T17:46:48.354Z"
+  },
+  "pipeline": {
+    "requestedRuns": 10,
+    "successfulRuns": 0,
+    "failedRuns": 0,
+    "unscorableRuns": 10,
+    "runSummaries": [
+      {
+        "runId": "0c152f78-fbde-4f82-862e-a6f38637a060",
+        "executionStatus": "completed",
+        "assessmentStatus": "unscorable",
+        "scoreByDimension": {},
+        "findings": 0,
+        "errors": [],
+        "accessReason": "no_inspectable_content"
+      },
+      {
+        "runId": "775d094d-6a1a-48b4-ba89-afb1dcf046a4",
+        "executionStatus": "completed",
+        "assessmentStatus": "unscorable",
+        "scoreByDimension": {},
+        "findings": 0,
+        "errors": [],
+        "accessReason": "no_inspectable_content"
+      },
+      {
+        "runId": "bdfc71f0-ec76-4610-81b3-514d5dea689f",
+        "executionStatus": "completed",
+        "assessmentStatus": "unscorable",
+        "scoreByDimension": {},
+        "findings": 0,
+        "errors": [],
+        "accessReason": "no_inspectable_content"
+      },
+      {
+        "runId": "ae514963-0548-4c61-8f2c-2b4ad7afe85e",
+        "executionStatus": "completed",
+        "assessmentStatus": "unscorable",
+        "scoreByDimension": {},
+        "findings": 0,
+        "errors": [],
+        "accessReason": "no_inspectable_content"
+      },
+      {
+        "runId": "cec35d2a-dab9-43ef-b53d-fdb9c83b5596",
+        "executionStatus": "completed",
+        "assessmentStatus": "unscorable",
+        "scoreByDimension": {},
+        "findings": 0,
+        "errors": [],
+        "accessReason": "no_inspectable_content"
+      },
+      {
+        "runId": "6673967f-646a-4595-a262-0dc7e10ba67c",
+        "executionStatus": "completed",
+        "assessmentStatus": "unscorable",
+        "scoreByDimension": {},
+        "findings": 0,
+        "errors": [],
+        "accessReason": "no_inspectable_content"
+      },
+      {
+        "runId": "fe9fb124-02fb-423c-a702-c18a2a9b9f56",
+        "executionStatus": "completed",
+        "assessmentStatus": "unscorable",
+        "scoreByDimension": {},
+        "findings": 0,
+        "errors": [],
+        "accessReason": "no_inspectable_content"
+      },
+      {
+        "runId": "9133c8f4-ff77-4495-a569-ace38bc78067",
+        "executionStatus": "completed",
+        "assessmentStatus": "unscorable",
+        "scoreByDimension": {},
+        "findings": 0,
+        "errors": [],
+        "accessReason": "no_inspectable_content"
+      },
+      {
+        "runId": "c4a7c887-5b7b-4450-b64a-a018a8594f31",
+        "executionStatus": "completed",
+        "assessmentStatus": "unscorable",
+        "scoreByDimension": {},
+        "findings": 0,
+        "errors": [],
+        "accessReason": "no_inspectable_content"
+      },
+      {
+        "runId": "9d253910-795e-444b-b64c-9319b982140a",
+        "executionStatus": "completed",
+        "assessmentStatus": "unscorable",
+        "scoreByDimension": {},
+        "findings": 0,
+        "errors": [],
+        "accessReason": "no_inspectable_content"
+      }
+    ]
+  },
+  "consistency": {
+    "criteria": [],
+    "dimensions": {}
+  },
+  "classificationStability": {
+    "samples": 0,
+    "modalArchetype": null,
+    "archetypeAgreement": null,
+    "modalDesignLanguage": null,
+    "designLanguageAgreement": null,
+    "confidenceDistribution": {
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    "archetypeEntropy": null,
+    "designLanguageEntropy": null
+  },
+  "findingStability": {
+    "totalRuns": 0,
+    "findings": [],
+    "meanRecurrence": null,
+    "stableFindings": 0,
+    "unstableFindings": 0
+  }
+}

@@ -139,6 +139,10 @@ node dist/src/cli.js gate --run RUN_ID --review .\review.json --artifacts .\runs
 
 Target quality is not represented as a process/config failure. A blocked preflight is `not_started`; a bot challenge is `unscorable`, never a low website score.
 
+## Stealth capture (Scrapling-inspired)
+
+Public sites with Cloudflare/WAF fingerprinting can block stock Playwright. Set `WEBLENS_STEALTH=1` to enable a Node port of Scrapling [StealthyFetcher](https://github.com/D4Vinci/Scrapling) techniques: realistic context headers, headless/WebRTC/canvas patches, optional real Chrome (`channel: chrome`), Cloudflare challenge wait/click, and a narrow allowlist extension for `challenges.cloudflare.com` / `cdnjs.cloudflare.com` under `local-public` only. The policy proxy and per-request `validateTarget` checks stay fail-closed. This is best-effort—not a guarantee against every bot wall.
+
 ## Evidence and privacy
 
 Each run is stored under `<artifactRoot>/<runId>/` with immutable `run.json`, JSON/Markdown/escaped-HTML reports, and hashed evidence files. Capture includes desktop/mobile screenshots, bounded DOM/style summaries, runtime events, axe results, and—when required—one serialized Lighthouse navigation report.
@@ -182,3 +186,7 @@ Migrations are append-only and ordered (`001_control_plane`, `002_identity_prove
 The adapter records only the WebLens artifact URI, SHA-256 hashes, and a bounded `{ score, reason }` projection. WebLens remains the evidence source of truth; screenshots, DOM, prompts, judge payloads, and provider errors are not copied into control-plane rows. A worker crash is `unknown` and requires paid-evaluator reconciliation, never an automatic rerun. Registry/company source provenance and consent/do-not-contact guards are enforced before facts or outreach permissions are persisted.
 
 See [the control-plane foundation guide](docs/control-plane-foundation.md) for RLS/bootstrap details, stale-run recovery, and the deliberately deferred roadmap.
+
+## Meta-evaluation (opt-in)
+
+The additive `src/evals/` library evaluates evaluator trustworthiness without entering the production path. It supports frozen-judge consistency, end-to-end pipeline consistency, finding stability, evidence grounding, rubric adherence, human calibration, and configurable regression comparisons. See [meta-evaluation](docs/meta-evaluation.md). The Promptfoo files under `evals/promptfoo/` are an optional thin adapter and are not a production dependency.

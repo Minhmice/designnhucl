@@ -33,7 +33,7 @@ export async function evaluate(rawInput: RunInput, dependencies: RunnerDependenc
       if (!callerMetadata?.cloudVision) throw new Error('Cloud evaluation requires a declared cloud-capable judge caller.');
       if (input.budgetUsd === null) throw new Error('Cloud evaluation requires an approved budget.');
       if (!Number.isFinite(callerMetadata.estimatedCostUsdPerCall) || callerMetadata.estimatedCostUsdPerCall <= 0 || !callerMetadata.pricingVersion) throw new Error('Cloud caller requires a versioned positive cost estimate.');
-      const estimate = callerMetadata.estimatedCostUsdPerCall * 4;
+      const estimate = callerMetadata.estimatedCostUsdPerCall * recipes[input.recipeId].maxModelCallsPerPage;
       if (estimate === undefined || !Number.isFinite(estimate) || estimate <= 0) throw new Error('A known positive model cost estimate is required.');
       if (estimate > input.budgetUsd) throw new Error('Estimated model cost exceeds the approved budget.');
     }
@@ -69,7 +69,8 @@ export async function evaluate(rawInput: RunInput, dependencies: RunnerDependenc
     ledger = input.allowCloudVision && input.budgetUsd !== null && dependencies.caller.metadata
       ? createBudgetLedger({ limitUsd: input.budgetUsd, estimatedCostPerCallUsd: dependencies.caller.metadata.estimatedCostUsdPerCall, pricingVersion: dependencies.caller.metadata.pricingVersion })
       : undefined;
-    const judges = await runJudges({ bundle, context: input.context, caller: dependencies.caller, maxCalls: recipe.maxModelCallsPerPage, timeoutMs: Math.min(120_000, Math.floor(recipe.runTimeoutMs / 3)), attempts: judgeAttempts, ...(ledger ? { ledger } : {}) });
+    // Remote vision with multi-viewport captures routinely exceeds 5 minutes on slow gateways.
+    const judges = await runJudges({ bundle, context: input.context, caller: dependencies.caller, maxCalls: recipe.maxModelCallsPerPage, timeoutMs: Math.min(600_000, Math.max(300_000, Math.floor(recipe.runTimeoutMs / 2))), attempts: judgeAttempts, ...(ledger ? { ledger } : {}) });
     const profile = buildProfile({ bundle, audits, judges });
     const profileHash = hash(profile);
     const observedRequirementIds = (bundle.requirementChecks ?? []).filter(({ status }) => status === 'passed').map(({ requirementId }) => requirementId);

@@ -1,0 +1,1 @@
+export default function findingStability(output) { const report = JSON.parse(output); const score = report.findingStability?.meanRecurrence ?? null; return { pass: score !== null && score >= 0.7, score: score ?? 0, reason: score === null ? 'No usable findings.' : `Mean recurrence: ${score}` }; }

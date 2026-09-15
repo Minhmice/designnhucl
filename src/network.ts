@@ -52,6 +52,10 @@ export async function validateTarget(rawUrl: string, policy: NetworkPolicy): Pro
     if (!allowed.has(url.origin)) throw new Error(`Target origin is not on the local allowlist: ${url.origin}`);
     return { url, origin: url.origin, resolvedAddresses: [] };
   }
+  if (policy.mode === 'local-public') {
+    const allowed = new Set((policy.allowedPublicOrigins ?? []).map((origin) => new URL(origin).origin));
+    if (!allowed.has(url.origin)) throw new Error(`Target origin is not on the public allowlist: ${url.origin}`);
+  }
 
   const hostname = normalizeHostname(url.hostname);
   const addresses = isIP(hostname)

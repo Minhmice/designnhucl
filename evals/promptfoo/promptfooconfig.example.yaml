@@ -1,0 +1,8 @@
+description: WebLens optional evaluator experiments
+providers:
+  - id: file://provider.ts
+tests:
+  - vars:
+      repeats: 5
+      mode: frozen-judge-consistency
+      note: Inject a frozen EvidenceBundle and WebLens evaluator in the provider.

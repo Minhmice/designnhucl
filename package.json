@@ -16,6 +16,13 @@
     "test:e2e": "npm run build && node --test dist/tests/e2e.test.js",
     "db:migrate": "node dist/src/control-plane/cli.js",
     "test:postgres": "npm run build && node --test dist/tests/control-plane-postgres.test.js"
+    ,"eval:promptfoo": "npm run build && promptfoo eval -c evals/promptfoo/promptfooconfig.yaml --no-cache"
+    ,"eval:promptfoo:fresh": "npm run eval:promptfoo -- --no-cache"
+    ,"eval:promptfoo:pnj": "npm run build && promptfoo eval -c evals/promptfoo/promptfooconfig.yaml --no-cache --output evals/promptfoo/results/pnj.json"
+    ,"eval:promptfoo:atad": "npm run build && promptfoo eval -c evals/promptfoo/promptfooconfig.yaml --no-cache --output evals/promptfoo/results/atad.json"
+    ,"eval:atad:direct": "npm run build && node evals/promptfoo/run-atad-direct.mjs"
+    ,"eval:atad:offline": "npm run build && node evals/promptfoo/run-atad-offline.mjs"
+    ,"eval:view": "promptfoo view"
   },
   "engines": {
     "node": ">=24"
@@ -36,6 +43,7 @@
     "@types/pg": "^8.23.1",
     "@types/pngjs": "^6.0.5",
     "pngjs": "^7.0.0",
+    "promptfoo": "^0.123.0",
     "typescript": "7.0.2"
   }
 }

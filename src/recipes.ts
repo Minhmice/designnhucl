@@ -6,6 +6,6 @@ const viewports = [
 ] as const;
 
 export const recipes: Record<'lead-fast' | 'critic-standard', EvaluationRecipe> = {
-  'lead-fast': { id: 'lead-fast', version: '2', maxPages: 1, viewports: [...viewports], maxInteractions: 0, navigationTimeoutMs: 30_000, settleTimeoutMs: 10_000, runTimeoutMs: 180_000, maxModelCallsPerPage: 4, maxFullPageHeight: 20_000, requireLighthouse: false },
-  'critic-standard': { id: 'critic-standard', version: '2', maxPages: 3, viewports: [...viewports], maxInteractions: 5, navigationTimeoutMs: 30_000, settleTimeoutMs: 10_000, runTimeoutMs: 900_000, maxModelCallsPerPage: 4, maxFullPageHeight: 20_000, requireLighthouse: true },
+  'lead-fast': { id: 'lead-fast', version: '2', maxPages: 1, viewports: [...viewports], maxInteractions: 0, navigationTimeoutMs: 30_000, settleTimeoutMs: 10_000, runTimeoutMs: 180_000, maxModelCallsPerPage: 6, maxFullPageHeight: 20_000, requireLighthouse: false },
+  'critic-standard': { id: 'critic-standard', version: '2', maxPages: 3, viewports: [...viewports], maxInteractions: 5, navigationTimeoutMs: 30_000, settleTimeoutMs: 10_000, runTimeoutMs: 900_000, maxModelCallsPerPage: 6, maxFullPageHeight: 20_000, requireLighthouse: true },
 };

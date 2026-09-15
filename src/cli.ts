@@ -11,6 +11,8 @@ import { assessCritic } from './policies/critic.js';
 import { renderReports } from './reports.js';
 import { evaluate } from './runner.js';
 import { loadRun, saveDecisionRevision } from './store.js';
+import { createBudgetLedger, runJudges } from './judges.js';
+import { evaluateFrozenJudges, saveMetaEvaluation } from './evals/index.js';
 
 export type CliIo = { stdout: (value: string) => void; stderr: (value: string) => void; environment: Record<string, string | undefined> };
 
@@ -38,8 +40,8 @@ export async function runCli(args: string[], io: CliIo): Promise<number> {
       if (!Number.isFinite(aggregateBudgetUsd) || aggregateBudgetUsd <= 0) throw new Error('Live batch requires a positive aggregate --budget.');
       const maxItems = Number(parsed.values['max-items']);
       const caller = createOpenAIJudgeCaller({
-        apiKey, model: parsed.values.model, allowCloudVision: true,
-        estimatedCostUsdPerCall: estimatedModelCostUsd / 4,
+        apiKey, baseURL: io.environment.OPENAI_BASE_URL, model: parsed.values.model, allowCloudVision: true,
+        estimatedCostUsdPerCall: estimatedModelCostUsd / 6,
         pricingVersion: io.environment.WEBLENS_PRICING_VERSION ?? 'operator-estimate-v1',
         inputUsdPerMillionTokens: io.environment.WEBLENS_INPUT_USD_PER_MILLION_TOKENS ? Number(io.environment.WEBLENS_INPUT_USD_PER_MILLION_TOKENS) : undefined,
         outputUsdPerMillionTokens: io.environment.WEBLENS_OUTPUT_USD_PER_MILLION_TOKENS ? Number(io.environment.WEBLENS_OUTPUT_USD_PER_MILLION_TOKENS) : undefined,
@@ -75,6 +77,20 @@ export async function runCli(args: string[], io: CliIo): Promise<number> {
       const diff = compareRuns(await loadRun(baselineId, parsed.values.artifacts), await loadRun(currentId, parsed.values.artifacts));
       io.stdout(`${JSON.stringify(diff, null, 2)}\n`);
       return diff.compatibility === 'compatible' ? 0 : 3;
+    }
+    if (command === 'meta-evaluate') {
+      const parsed = parseArgs({ args: rest, allowPositionals: true, options: { run: { type: 'string' }, artifacts: { type: 'string', default: './runs' }, 'eval-artifacts': { type: 'string', default: './eval-runs' }, repeats: { type: 'string', default: '3' }, budget: { type: 'string' }, 'allow-cloud-vision': { type: 'boolean', default: false }, model: { type: 'string', default: io.environment.WEBLENS_MODEL ?? 'gpt-5.4-mini' } } });
+      if (!parsed.values.run) throw new Error('meta-evaluate requires --run RUN_ID.');
+      if (!parsed.values['allow-cloud-vision']) throw new Error('Meta-evaluation requires explicit --allow-cloud-vision approval.');
+      const run = await loadRun(parsed.values.run, parsed.values.artifacts);
+      if (!run.bundle || !run.context) throw new Error('Run does not contain a frozen evidence bundle and context.');
+      const apiKey = io.environment.OPENAI_API_KEY; if (!apiKey) throw new Error('OPENAI_API_KEY is required for meta-evaluation.');
+      const estimate = Number(io.environment.WEBLENS_ESTIMATED_RUN_COST_USD); const budget = Number(parsed.values.budget); const repeats = Number(parsed.values.repeats);
+      if (!Number.isFinite(estimate) || estimate <= 0 || !Number.isFinite(budget) || budget <= 0) throw new Error('Meta-evaluation requires positive estimate and --budget values.');
+      const caller = createOpenAIJudgeCaller({ apiKey, baseURL: io.environment.OPENAI_BASE_URL, model: parsed.values.model, allowCloudVision: true, estimatedCostUsdPerCall: estimate / 6, pricingVersion: io.environment.WEBLENS_PRICING_VERSION ?? 'operator-estimate-v1' });
+      const ledger = createBudgetLedger({ limitUsd: budget, estimatedCostPerCallUsd: estimate / 6, pricingVersion: caller.metadata!.pricingVersion });
+      const report = await evaluateFrozenJudges({ bundle: run.bundle, context: run.context, repeats, runIds: [run.runId], judge: async ({ bundle, context }) => runJudges({ bundle, context, caller, maxCalls: 6, timeoutMs: 600_000, ledger }) });
+      const path = await saveMetaEvaluation(report, parsed.values['eval-artifacts']); io.stdout(`${JSON.stringify({ path, report }, null, 2)}\n`); return 0;
     }
     if (command === 'gate') {
       const parsed = parseArgs({ args: rest, options: { run: { type: 'string' }, review: { type: 'string' }, artifacts: { type: 'string', default: './runs' } } });
@@ -125,8 +141,8 @@ export async function runCli(args: string[], io: CliIo): Promise<number> {
         ...(redaction ? { redaction } : {}),
       };
       const run = await evaluate(input, { caller: createOpenAIJudgeCaller({
-        apiKey, model: parsed.values.model, allowCloudVision: true,
-        estimatedCostUsdPerCall: estimatedModelCostUsd / 4,
+        apiKey, baseURL: io.environment.OPENAI_BASE_URL, model: parsed.values.model, allowCloudVision: true,
+        estimatedCostUsdPerCall: estimatedModelCostUsd / 6,
         pricingVersion: io.environment.WEBLENS_PRICING_VERSION ?? 'operator-estimate-v1',
         inputUsdPerMillionTokens: io.environment.WEBLENS_INPUT_USD_PER_MILLION_TOKENS ? Number(io.environment.WEBLENS_INPUT_USD_PER_MILLION_TOKENS) : undefined,
         outputUsdPerMillionTokens: io.environment.WEBLENS_OUTPUT_USD_PER_MILLION_TOKENS ? Number(io.environment.WEBLENS_OUTPUT_USD_PER_MILLION_TOKENS) : undefined,

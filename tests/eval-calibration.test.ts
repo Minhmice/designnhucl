@@ -1,0 +1,4 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import { aggregateHumanLabels, calculateCalibration } from '../src/evals/index.js';
+test('calibration aggregates reviewer median and reports bias', () => { const labels = [{ itemId: 'i', familyId: 'f', split: 'development' as const, criterionId: 'visual.hierarchy', reviewerId: 'a', rating: 2 as const, evidenceIds: ['e'] }, { itemId: 'i', familyId: 'f', split: 'development' as const, criterionId: 'visual.hierarchy', reviewerId: 'b', rating: 3 as const, evidenceIds: ['e'] }]; const consensus = aggregateHumanLabels(labels); assert.equal(consensus[0]?.median, 2.5); const report = calculateCalibration([{ criterionId: 'visual.hierarchy', rating: 4 }], consensus); assert.equal(report.bias, 1.5); assert.equal(report.mae, 1.5); });

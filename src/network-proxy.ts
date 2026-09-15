@@ -7,7 +7,7 @@ import type { NetworkPolicy } from './contracts.js';
 import { validateTarget, type ValidatedTarget } from './network.js';
 
 function connectionHost(target: ValidatedTarget, policy: NetworkPolicy): string {
-  if (policy.mode === 'public') {
+  if (policy.mode === 'public' || policy.mode === 'local-public') {
     const address = target.resolvedAddresses[0];
     if (!address) throw new Error('No validated address is available for the proxy connection.');
     return address;
@@ -43,9 +43,12 @@ async function forward(request: IncomingMessage, response: ServerResponse, polic
       servername: target.url.hostname.replace(/^\[|\]$/g, ''),
     }, (upstreamResponse) => {
       response.writeHead(upstreamResponse.statusCode ?? 502, upstreamResponse.headers);
+      upstreamResponse.on('error', () => response.destroy());
       upstreamResponse.pipe(response);
     });
     upstream.on('error', () => fail(response, 502, 'Upstream connection failed.'));
+    request.on('error', () => upstream.destroy());
+    response.on('error', () => upstream.destroy());
     response.once('close', () => upstream.destroy());
     request.pipe(upstream);
   } catch {
@@ -58,6 +61,7 @@ async function tunnel(request: IncomingMessage, client: Duplex, head: Buffer, po
     if (!request.url) throw new Error('Missing CONNECT authority.');
     const target = await validateTarget(`https://${request.url}`, policy);
     const upstream = connect({ host: connectionHost(target, policy), port: targetPort(target.url) });
+    client.on('error', () => upstream.destroy());
     upstream.once('connect', () => {
       client.write('HTTP/1.1 200 Connection Established\r\n\r\n');
       if (head.length) upstream.write(head);

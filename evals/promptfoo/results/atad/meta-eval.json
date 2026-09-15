@@ -1,0 +1,453 @@
+{
+  "provenance": {
+    "schemaVersion": 1,
+    "metricVersion": "meta-eval-v2",
+    "mode": "pipeline-consistency",
+    "sampleCount": 5,
+    "runIds": [
+      "dce39b73-117a-4a9c-b81a-5d2021565730",
+      "2e0ec893-d211-49af-b7ff-0c08a6785af2",
+      "44914f2f-9a01-4f12-9068-3413d8b251cb",
+      "80a77dfa-cefb-4e15-b080-0679ce055f53",
+      "902761cb-147b-4048-b3d7-a87ee5a0835a"
+    ],
+    "evidenceHashes": [],
+    "model": null,
+    "provider": null,
+    "promptVersion": null,
+    "rubricVersion": null,
+    "createdAt": "2026-09-15T14:37:34.481Z"
+  },
+  "pipeline": {
+    "requestedRuns": 5,
+    "successfulRuns": 0,
+    "failedRuns": 5,
+    "unscorableRuns": 0,
+    "numericIntegrity": {
+      "valid": true,
+      "checkedMetrics": 0,
+      "invalidMetrics": []
+    },
+    "runSummaries": [
+      {
+        "runId": "dce39b73-117a-4a9c-b81a-5d2021565730",
+        "executionStatus": "failed",
+        "assessmentStatus": null,
+        "accessReason": null,
+        "scoreByDimension": {},
+        "findings": 0,
+        "errors": [
+          "judge-visual:judgestageerror"
+        ]
+      },
+      {
+        "runId": "2e0ec893-d211-49af-b7ff-0c08a6785af2",
+        "executionStatus": "failed",
+        "assessmentStatus": null,
+        "accessReason": null,
+        "scoreByDimension": {},
+        "findings": 0,
+        "errors": [
+          "judge-classify:judgestageerror"
+        ]
+      },
+      {
+        "runId": "44914f2f-9a01-4f12-9068-3413d8b251cb",
+        "executionStatus": "failed",
+        "assessmentStatus": null,
+        "accessReason": null,
+        "scoreByDimension": {},
+        "findings": 0,
+        "errors": [
+          "judge-visual:judgestageerror"
+        ]
+      },
+      {
+        "runId": "80a77dfa-cefb-4e15-b080-0679ce055f53",
+        "executionStatus": "failed",
+        "assessmentStatus": null,
+        "accessReason": null,
+        "scoreByDimension": {},
+        "findings": 0,
+        "errors": [
+          "judge-classify:judgestageerror"
+        ]
+      },
+      {
+        "runId": "902761cb-147b-4048-b3d7-a87ee5a0835a",
+        "executionStatus": "failed",
+        "assessmentStatus": null,
+        "accessReason": null,
+        "scoreByDimension": {},
+        "findings": 0,
+        "errors": [
+          "judge-visual:judgestageerror"
+        ]
+      }
+    ]
+  },
+  "consistency": {
+    "criteria": [
+      {
+        "criterionId": "conversion.affordances",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "responsive.behavior",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "ux.cta-clarity",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "ux.information-architecture",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "ux.readability",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.assets",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.color",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.composition",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.consistency",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.hierarchy",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.polish",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.spacing",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.typography",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      }
+    ],
+    "dimensions": {}
+  },
+  "classificationStability": {
+    "samples": 0,
+    "modalArchetype": null,
+    "archetypeAgreement": null,
+    "modalDesignLanguage": null,
+    "designLanguageAgreement": null,
+    "confidenceDistribution": {
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    "archetypeEntropy": null,
+    "designLanguageEntropy": null
+  },
+  "findingStability": {
+    "totalRuns": 0,
+    "findings": [],
+    "meanRecurrence": null,
+    "stableFindings": 0,
+    "unstableFindings": 0
+  },
+  "trust": {
+    "minimumRepeats": 5,
+    "actualRepeats": 5,
+    "sufficientRepeats": true,
+    "completeCriterionSampleCount": 0,
+    "passed": false,
+    "reasons": [
+      "incomplete_pipeline_runs",
+      "judge_stage_or_rubric_coverage_incomplete",
+      "criterion_variance_above_threshold",
+      "exact_agreement_below_threshold",
+      "within_one_agreement_below_threshold",
+      "finding_recurrence_below_threshold",
+      "evidence_existence_below_threshold",
+      "criterion_coverage_incomplete",
+      "schema_or_evidence_adherence_failed"
+    ],
+    "thresholds": {
+      "maxMeanStandardDeviation": 0.8,
+      "minExactAgreement": 0.8,
+      "minWithinOneAgreement": 0.95,
+      "minFindingRecurrence": 0.8,
+      "minEvidenceExistence": 1,
+      "minEvidenceSupport": 0.9,
+      "minCriterionCoverage": 1
+    },
+    "evidenceExistenceRate": null,
+    "evidenceSupportRate": null,
+    "unsupportedClaimRate": null,
+    "hallucinationRate": null,
+    "criterionCoverage": null,
+    "completeCriterionCoverage": 1,
+    "schemaComplianceRate": null,
+    "numericIntegrityRate": null,
+    "meanStandardDeviation": null,
+    "meanExactAgreement": null,
+    "meanWithinOneAgreement": null,
+    "findingRecurrence": null
+  }
+}

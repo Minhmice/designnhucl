@@ -1,0 +1,1120 @@
+{
+  "provenance": {
+    "schemaVersion": 1,
+    "metricVersion": "meta-eval-v2",
+    "mode": "pipeline-consistency",
+    "sampleCount": 5,
+    "runIds": [
+      "7f8e5b41-fb9b-4ca1-a7ac-e76ab03137c7",
+      "8e7b4d80-e4e2-42b0-ba99-373ea04a1823",
+      "5ea0b541-b5cf-446e-adce-0649f3d3bb89",
+      "f090a175-d919-40f2-aaa5-9e5dcf5cf638",
+      "121999fe-9c84-452c-b178-e42868ffeb24"
+    ],
+    "evidenceHashes": [
+      "67c1e7c829cc24638eeabaaff1c317f560811a79131545cba4eed3ef10d6660e",
+      "3b14bf4919e185ffb77fd4bdb7a7d007cb729fe30da91efebbd8f7af5c020655",
+      "e2d08572ecdcd84390c4946454cfa017e415a4a1020619e531582f86fb33e4ce",
+      "3982e321f22cbb735b6ad8b9068a8047dfa59b5c8454eb542ccfd57d78b5c4fb",
+      "45f593c72e99e4d164ff3ad3ed9aa189e3369509d4fbc64efa77ea1b1e4d6f3e",
+      "3c89dcdafb110f991b6200c4d9d894c6f797b1143ebf148207045cf975bbfbb0",
+      "4a1eb1efbbda4e5b0eb39f72f77892c49cf87d76bbdf106fbb457dc7dfa95c3e",
+      "505fdec104c9afc71b9cfa2ee37cc26fad10f195bc0255d8eb0aadafe0b720a4",
+      "e2d08572ecdcd84390c4946454cfa017e415a4a1020619e531582f86fb33e4ce",
+      "a53e5efeb2724d6e5062ffafc7ed9cbd63a9ae5e8225bfa7c934fd1c2187f176",
+      "8158e98bf71d5c8335b77888331dcdc6e1d18c71824d3bc1d503f35c20326a2b",
+      "7e73a677b8ba2626f92783a8a4113831384bd2186aa767f10f0a549bd878b45a",
+      "14595917222d3c5f7bf3c0dd23007542096db91f6c763245084c5a24ef53ce02",
+      "67c1e7c829cc24638eeabaaff1c317f560811a79131545cba4eed3ef10d6660e",
+      "195d463d32a04014bcc25647514d7832c1fdd6e244d2e9d417f40e1e20e8b6ef",
+      "92c2aa5a5fdaff18dc723ac475d338c62fd83aa33f9a8dc8ee0990e3332e81fb",
+      "3982e321f22cbb735b6ad8b9068a8047dfa59b5c8454eb542ccfd57d78b5c4fb",
+      "d4fdb2d7bf17e44d1709175e2ae0ef44521d7af24113e64450064687122f7379",
+      "1112e757a8edbb548433e93341fad7467eaf7747f5cbc808b43b8b1694a6c8e8",
+      "4a1eb1efbbda4e5b0eb39f72f77892c49cf87d76bbdf106fbb457dc7dfa95c3e",
+      "5b7f6a37da37c18f361e3b677f7abde59c81b915f93280705b170ce01aa3e715",
+      "92c2aa5a5fdaff18dc723ac475d338c62fd83aa33f9a8dc8ee0990e3332e81fb",
+      "a53e5efeb2724d6e5062ffafc7ed9cbd63a9ae5e8225bfa7c934fd1c2187f176",
+      "d0fa8c62f3f45138fa85f1cf5b992fa01f3aaf5663c316f90093a1a6de5da80d",
+      "a9ebb148be28ac09b4165d04c47f83b0fc134c354eeaca050f1c3a1610777767",
+      "5efb4afc138965e81c3fa94d9bcdd7a3997a4aa54cf04c4ac41d39067a81a7e1",
+      "b69f8bf223506f87fbe80ef84727f1e45a2c3d337fa04304d99a1ed92872b371",
+      "b69f8bf223506f87fbe80ef84727f1e45a2c3d337fa04304d99a1ed92872b371",
+      "25ea8e48a3121b0d8db27543b0283bb14667c677510755bfa572012c28135737",
+      "be56bca85f0b48177cc7f929364d0eaa99928de49014bf1f564bb380ec16572c",
+      "fae3030823f173f37af91c02691d985c59cb828a2c709095334ff9ad9652dfe5",
+      "34d8d4bf1412213b3e40b97b6957c19e3f33e8d8876f2d6613ae6627ab5e2785",
+      "4a1eb1efbbda4e5b0eb39f72f77892c49cf87d76bbdf106fbb457dc7dfa95c3e",
+      "fdcaffc0a8cb8e02cf0719559ee36069507d0fb572923739c5741272e341488f",
+      "92c2aa5a5fdaff18dc723ac475d338c62fd83aa33f9a8dc8ee0990e3332e81fb",
+      "a53e5efeb2724d6e5062ffafc7ed9cbd63a9ae5e8225bfa7c934fd1c2187f176",
+      "3ab7c70463da6f2f548f5469bd0bec130ee45a61572b53e4cd27f0f4649d3e74",
+      "fc37f534eceac420529a27cf1911dc7802148813e7ffc393c85fae0320af39ee",
+      "e4cad4d07657178ef4daf231aa94c2002706192d4f0dc19d25e26f40ad036633",
+      "67c1e7c829cc24638eeabaaff1c317f560811a79131545cba4eed3ef10d6660e",
+      "08103e2e09045866cdee864d94ca3a680b9dfd6f8cc9481a09a5635ce594fe5c",
+      "449b870ee130296bc9911f5fb4cee12228e938491bde38d3e5a252ee0069c19c",
+      "3982e321f22cbb735b6ad8b9068a8047dfa59b5c8454eb542ccfd57d78b5c4fb",
+      "c9fb53781a0761c5270087d9f6f69b5f5b6192586e2a4a00834716901eec1bf7",
+      "8bed9722109d651b31d30428f11e8f7636906bb79f990439b1fbb54857a02a3d",
+      "4a1eb1efbbda4e5b0eb39f72f77892c49cf87d76bbdf106fbb457dc7dfa95c3e",
+      "25c91746bd30e8d435e30813bb7fecac5751fb51ac2e5e52fe2510c33d2462fa",
+      "449b870ee130296bc9911f5fb4cee12228e938491bde38d3e5a252ee0069c19c",
+      "a53e5efeb2724d6e5062ffafc7ed9cbd63a9ae5e8225bfa7c934fd1c2187f176",
+      "b0367f3461e68ecb978a06c7fd2ed58f271dbd80a2dd6fbd446710e059f186a8",
+      "f17aeaebb7efdcc5b52fec8e946b5fddc294495bd36777fa28cebb91c6a5c000",
+      "2e30e9bb9f411d35a8306a30f3ffc8da0714ceb5599ee1bdc14ae5c4a9ba86da",
+      "67c1e7c829cc24638eeabaaff1c317f560811a79131545cba4eed3ef10d6660e",
+      "08103e2e09045866cdee864d94ca3a680b9dfd6f8cc9481a09a5635ce594fe5c",
+      "449b870ee130296bc9911f5fb4cee12228e938491bde38d3e5a252ee0069c19c",
+      "3982e321f22cbb735b6ad8b9068a8047dfa59b5c8454eb542ccfd57d78b5c4fb",
+      "cb05d4956b812a46f25d8201607bdff0269a049d6a569e67132f53161b32ced0",
+      "8c117a16cf9a96b95664992ed930c0652bba2750ce9453773af263320a1a6daf",
+      "4a1eb1efbbda4e5b0eb39f72f77892c49cf87d76bbdf106fbb457dc7dfa95c3e",
+      "097aa55903c32eea0ec85eaced8ebfa74f1348857a531c1f3d59b4762fd9bd43",
+      "449b870ee130296bc9911f5fb4cee12228e938491bde38d3e5a252ee0069c19c",
+      "a53e5efeb2724d6e5062ffafc7ed9cbd63a9ae5e8225bfa7c934fd1c2187f176",
+      "7c89c105d1c923d2af1ec6865fc174b372b7527838cef76eee44cb6b9ecbaa15",
+      "c4d653d048cbe9d9b3e790ee1fea22fa9f1d3dd8beaeb16844aaceb7a8c752c7",
+      "1b5f237c1934f73467146c68f84b4e53a7fbcf30c9aa3f668ca8c3527e69e47b"
+    ],
+    "model": "coding-v3",
+    "provider": null,
+    "promptVersion": "prompt-v1",
+    "rubricVersion": "rubric-v1",
+    "createdAt": "2026-09-15T15:00:39.005Z"
+  },
+  "pipeline": {
+    "requestedRuns": 5,
+    "successfulRuns": 5,
+    "failedRuns": 0,
+    "unscorableRuns": 0,
+    "numericIntegrity": {
+      "valid": true,
+      "checkedMetrics": 60,
+      "invalidMetrics": []
+    },
+    "runSummaries": [
+      {
+        "runId": "7f8e5b41-fb9b-4ca1-a7ac-e76ab03137c7",
+        "executionStatus": "completed",
+        "assessmentStatus": "complete",
+        "accessReason": null,
+        "scoreByDimension": {
+          "visual": 34,
+          "ux": 58,
+          "responsive": 50,
+          "conversion": 50,
+          "brand": null,
+          "technical": 93,
+          "accessibility": null
+        },
+        "findings": 25,
+        "errors": []
+      },
+      {
+        "runId": "8e7b4d80-e4e2-42b0-ba99-373ea04a1823",
+        "executionStatus": "completed",
+        "assessmentStatus": "complete",
+        "accessReason": null,
+        "scoreByDimension": {
+          "visual": 34,
+          "ux": 50,
+          "responsive": 50,
+          "conversion": 50,
+          "brand": null,
+          "technical": 94,
+          "accessibility": null
+        },
+        "findings": 26,
+        "errors": []
+      },
+      {
+        "runId": "5ea0b541-b5cf-446e-adce-0649f3d3bb89",
+        "executionStatus": "completed",
+        "assessmentStatus": "complete",
+        "accessReason": null,
+        "scoreByDimension": {
+          "visual": 31,
+          "ux": 50,
+          "responsive": 25,
+          "conversion": 50,
+          "brand": null,
+          "technical": 93,
+          "accessibility": null
+        },
+        "findings": 25,
+        "errors": []
+      },
+      {
+        "runId": "f090a175-d919-40f2-aaa5-9e5dcf5cf638",
+        "executionStatus": "completed",
+        "assessmentStatus": "complete",
+        "accessReason": null,
+        "scoreByDimension": {
+          "visual": 38,
+          "ux": 58,
+          "responsive": 50,
+          "conversion": 50,
+          "brand": null,
+          "technical": 95,
+          "accessibility": null
+        },
+        "findings": 27,
+        "errors": []
+      },
+      {
+        "runId": "121999fe-9c84-452c-b178-e42868ffeb24",
+        "executionStatus": "completed",
+        "assessmentStatus": "complete",
+        "accessReason": null,
+        "scoreByDimension": {
+          "visual": 38,
+          "ux": 50,
+          "responsive": 50,
+          "conversion": 50,
+          "brand": null,
+          "technical": 96,
+          "accessibility": null
+        },
+        "findings": 26,
+        "errors": []
+      }
+    ]
+  },
+  "consistency": {
+    "criteria": [
+      {
+        "criterionId": "conversion.affordances",
+        "samples": 5,
+        "mean": 2,
+        "median": 2,
+        "variance": 0,
+        "standardDeviation": 0,
+        "minimum": 2,
+        "maximum": 2,
+        "range": 0,
+        "coefficientOfVariation": 0,
+        "exactAgreementRate": 1,
+        "withinOneAgreementRate": 1,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 5,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 0,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "responsive.behavior",
+        "samples": 5,
+        "mean": 1.8,
+        "median": 2,
+        "variance": 0.16,
+        "standardDeviation": 0.4,
+        "minimum": 1,
+        "maximum": 2,
+        "range": 1,
+        "coefficientOfVariation": 0.22222222222222224,
+        "exactAgreementRate": 0.8,
+        "withinOneAgreementRate": 1,
+        "distribution": {
+          "0": 0,
+          "1": 1,
+          "2": 4,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 0,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "ux.cta-clarity",
+        "samples": 5,
+        "mean": 2,
+        "median": 2,
+        "variance": 0,
+        "standardDeviation": 0,
+        "minimum": 2,
+        "maximum": 2,
+        "range": 0,
+        "coefficientOfVariation": 0,
+        "exactAgreementRate": 1,
+        "withinOneAgreementRate": 1,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 5,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 0,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "ux.information-architecture",
+        "samples": 5,
+        "mean": 2,
+        "median": 2,
+        "variance": 0,
+        "standardDeviation": 0,
+        "minimum": 2,
+        "maximum": 2,
+        "range": 0,
+        "coefficientOfVariation": 0,
+        "exactAgreementRate": 1,
+        "withinOneAgreementRate": 1,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 5,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 0,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "ux.readability",
+        "samples": 5,
+        "mean": 2.4,
+        "median": 2,
+        "variance": 0.24,
+        "standardDeviation": 0.4898979485566356,
+        "minimum": 2,
+        "maximum": 3,
+        "range": 1,
+        "coefficientOfVariation": 0.2041241452319315,
+        "exactAgreementRate": 0.4,
+        "withinOneAgreementRate": 1,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 3,
+          "3": 2,
+          "4": 0
+        },
+        "unobservedRate": 0,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.assets",
+        "samples": 5,
+        "mean": 1.8,
+        "median": 2,
+        "variance": 0.16,
+        "standardDeviation": 0.4,
+        "minimum": 1,
+        "maximum": 2,
+        "range": 1,
+        "coefficientOfVariation": 0.22222222222222224,
+        "exactAgreementRate": 0.8,
+        "withinOneAgreementRate": 1,
+        "distribution": {
+          "0": 0,
+          "1": 1,
+          "2": 4,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 0,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.color",
+        "samples": 5,
+        "mean": 2,
+        "median": 2,
+        "variance": 0,
+        "standardDeviation": 0,
+        "minimum": 2,
+        "maximum": 2,
+        "range": 0,
+        "coefficientOfVariation": 0,
+        "exactAgreementRate": 1,
+        "withinOneAgreementRate": 1,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 5,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 0,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.composition",
+        "samples": 5,
+        "mean": 1,
+        "median": 1,
+        "variance": 0,
+        "standardDeviation": 0,
+        "minimum": 1,
+        "maximum": 1,
+        "range": 0,
+        "coefficientOfVariation": 0,
+        "exactAgreementRate": 1,
+        "withinOneAgreementRate": 1,
+        "distribution": {
+          "0": 0,
+          "1": 5,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 0,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.consistency",
+        "samples": 5,
+        "mean": 1.4,
+        "median": 1,
+        "variance": 0.24,
+        "standardDeviation": 0.4898979485566356,
+        "minimum": 1,
+        "maximum": 2,
+        "range": 1,
+        "coefficientOfVariation": 0.3499271061118826,
+        "exactAgreementRate": 0.6,
+        "withinOneAgreementRate": 1,
+        "distribution": {
+          "0": 0,
+          "1": 3,
+          "2": 2,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 0,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.hierarchy",
+        "samples": 5,
+        "mean": 1,
+        "median": 1,
+        "variance": 0,
+        "standardDeviation": 0,
+        "minimum": 1,
+        "maximum": 1,
+        "range": 0,
+        "coefficientOfVariation": 0,
+        "exactAgreementRate": 1,
+        "withinOneAgreementRate": 1,
+        "distribution": {
+          "0": 0,
+          "1": 5,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 0,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.polish",
+        "samples": 5,
+        "mean": 1,
+        "median": 1,
+        "variance": 0,
+        "standardDeviation": 0,
+        "minimum": 1,
+        "maximum": 1,
+        "range": 0,
+        "coefficientOfVariation": 0,
+        "exactAgreementRate": 1,
+        "withinOneAgreementRate": 1,
+        "distribution": {
+          "0": 0,
+          "1": 5,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 0,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.spacing",
+        "samples": 5,
+        "mean": 1,
+        "median": 1,
+        "variance": 0,
+        "standardDeviation": 0,
+        "minimum": 1,
+        "maximum": 1,
+        "range": 0,
+        "coefficientOfVariation": 0,
+        "exactAgreementRate": 1,
+        "withinOneAgreementRate": 1,
+        "distribution": {
+          "0": 0,
+          "1": 5,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 0,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.typography",
+        "samples": 5,
+        "mean": 2,
+        "median": 2,
+        "variance": 0,
+        "standardDeviation": 0,
+        "minimum": 2,
+        "maximum": 2,
+        "range": 0,
+        "coefficientOfVariation": 0,
+        "exactAgreementRate": 1,
+        "withinOneAgreementRate": 1,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 5,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 0,
+        "notApplicableRate": 0
+      }
+    ],
+    "dimensions": {
+      "conversion": {
+        "samples": 5,
+        "mean": 50,
+        "median": 50,
+        "variance": 0,
+        "standardDeviation": 0,
+        "minimum": 50,
+        "maximum": 50,
+        "range": 0,
+        "coefficientOfVariation": 0
+      },
+      "responsive": {
+        "samples": 5,
+        "mean": 45,
+        "median": 50,
+        "variance": 100,
+        "standardDeviation": 10,
+        "minimum": 25,
+        "maximum": 50,
+        "range": 25,
+        "coefficientOfVariation": 0.2222222222222222
+      },
+      "technical": {
+        "samples": 5,
+        "mean": 94.2,
+        "median": 94,
+        "variance": 1.3599999999999999,
+        "standardDeviation": 1.16619037896906,
+        "minimum": 93,
+        "maximum": 96,
+        "range": 3,
+        "coefficientOfVariation": 0.012379940328758597
+      },
+      "ux": {
+        "samples": 5,
+        "mean": 53.2,
+        "median": 50,
+        "variance": 15.360000000000003,
+        "standardDeviation": 3.9191835884530852,
+        "minimum": 50,
+        "maximum": 58,
+        "range": 8,
+        "coefficientOfVariation": 0.07366886444460687
+      },
+      "visual": {
+        "samples": 5,
+        "mean": 35,
+        "median": 34,
+        "variance": 7.2,
+        "standardDeviation": 2.6832815729997477,
+        "minimum": 31,
+        "maximum": 38,
+        "range": 7,
+        "coefficientOfVariation": 0.07666518779999279
+      }
+    }
+  },
+  "classificationStability": {
+    "samples": 15,
+    "modalArchetype": "corporate_service",
+    "archetypeAgreement": 1,
+    "modalDesignLanguage": "Corporate B2B legacy, blue-heavy, utilitarian",
+    "designLanguageAgreement": 0.06666666666666667,
+    "confidenceDistribution": {
+      "high": 15,
+      "medium": 0,
+      "low": 0
+    },
+    "archetypeEntropy": 0,
+    "designLanguageEntropy": 3.906890595608518
+  },
+  "findingStability": {
+    "totalRuns": 5,
+    "findings": [
+      {
+        "key": "desktop-initial-expanded-navigation-obscures-content|hierarchy.navigation-obstruction|visual_hierarchy|/|desktop",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "mobile-initial-excessive-empty-space-before-content|composition.excessive-empty-space|composition|/|mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "desktop-mobile-layout-language-mismatch|consistency.responsive-mismatch|consistency|/|desktop,mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "mobile-long-dense-content-low-scanability|typography.content-density|typography|/|mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "home.desktop.expanded-navigation-overfold|ia.mega-menu-overload|information_architecture|/|desktop",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "home.mobile.first-view.weak-primary-cta|conversion.mobile-cta-visibility|conversion|/|mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "home.mobile.excessive-intro-gap|responsive.vertical-space|responsive_behavior|/|mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "76de9c87bc7a531917b38db5eae7a7b8e8e527e41a301ac47b60f62a74f9c1c8|heading-order|accessibility|/|desktop",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "5533b55e507e1fc3cf6ae28464e2728539c3b0dc3c3424eb10d07981799be555|image-alt|accessibility|/|desktop",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "69401c56687e5dfe583173c9b5cc3df99130581b2cbafb353b907587003c5393|landmark-one-main|accessibility|/|desktop",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "ad26078536a00b8048963150855a7a3bb2457c3b745cbfd74d61eb423cc1239b|link-in-text-block|accessibility|/|desktop",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "287a9317810de3eb96120b2c01cf7b3cbafe0c30ff591bf9c97bd10a42ba3ada|link-name|accessibility|/|desktop",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "1e467fc392188204c101cdab37a5af1a1d1052b887b7fa6cef5e7cc8670a5bc9|page-has-heading-one|accessibility|/|desktop",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "6242b06393bdda89c6673198d204f76cd00d98764f1bec8e4cd1a3b7c2657cb2|region|accessibility|/|desktop",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "6aaabbcd973e838945c6f230315b6a0d9eec0009f20bc53c8a3548fde452aa2a|color-contrast|accessibility|/|mobile",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "5859083c345bde12d57eb8757071b9bbd1ee23d22f23bbb2ba62307988ce2ac4|heading-order|accessibility|/|mobile",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "7f112714917de56dd5134a116f34a57ae91db3e8e395315b40f3cc1744364ff7|image-alt|accessibility|/|mobile",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "548b142deeb6225a9edc6d58aabdcf96e9b14ae2b4922bdd7d8cab210ac80d60|landmark-one-main|accessibility|/|mobile",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "56d313f20814e15dc7d295aea626648755cc30859b8de291e8744c95c9a1d5e4|link-in-text-block|accessibility|/|mobile",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "7794d7f62db4923b1ce46738b13262373111e62741a0ceacb9a739a32359d528|link-name|accessibility|/|mobile",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "9f94720d573da2d69f0f31f00013d8d4e76aa514f26f32d0f04aa8a19b40c93c|page-has-heading-one|accessibility|/|mobile",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "a63587b75a2d01032c1d58141387f51c3f8cebf0ebe26e6fbc6ddd9b970aa911|region|accessibility|/|mobile",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "b2cf4337b4615a140bc62fff8bc781a103590103819a94b97923da79c58ed159|horizontal-overflow|responsive|/|desktop",
+        "observedRuns": 4,
+        "recurrenceRate": 0.8,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "8958d6a32cbaa8018c276147806767b88c037843db92811ac9c315dcbd789448|page-error|technical|/|desktop",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "a94eddf1d051ce6ceee834e0bfedb9226bed3000e5a1ee09435969b6cb859ebb|page-error|technical|/|mobile",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "desktop-mega-navigation-dominates-above-fold|hierarchy.primary-action|visual_hierarchy|/|desktop",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "mobile-header-to-content-excessive-empty-space|composition.content-density|responsive_layout|/|mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "desktop-blue-panels-mobile-light-blue-surface|consistency.responsive-system|visual_consistency|/|desktop,mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "desktop-mega-menu-small-text-many-links|typography.scanability|typography|/|desktop",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "desktop-navigation-dominates-first-view|ux.ia.first-view-priority|information_architecture|/|desktop",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "mobile-large-empty-intro-space|ux.first-view.content-delay|responsive|/|mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "mobile-dense-justified-body-copy|ux.readability.mobile-density|readability|/|mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "contact-present-no-primary-consultation-action|conversion.primary-cta|conversion|/|desktop,mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "desktop-missing-logo-image|assets.missing-image|assets|/|desktop",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "mobile-excessive-empty-header-space|layout.excessive-empty-space|composition|/|mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "desktop-navigation-heavy-blue-panels|hierarchy.navigation-dominates|hierarchy|/|desktop",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "responsive-visual-language-diverges|consistency.responsive-drift|consistency|/|desktop,mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "home-logo-broken-desktop|visual.broken-asset|visual|/|desktop",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "home-desktop-navigation-expanded|ux.navigation.default-state|information_architecture|/|desktop",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "home-mobile-large-empty-hero|responsive.empty-space|responsive|/|mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "home-primary-cta-not-prominent|conversion.primary-action|conversion|/|desktop,mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "desktop-mega-menu-dominates-first-screen|visual-hierarchy|hierarchy|/|desktop",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "mobile-header-to-introduction-excessive-gap|visual-spacing|spacing|/|mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "primary-contact-action-not-prominent|conversion-hierarchy|hierarchy|/|desktop,mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "mobile-introduction-dense-justified-copy|visual-typography|typography|/|mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "project-content-lacks-strong-above-fold-visual|visual-assets|assets|/|desktop,mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "desktop-expanded-navigation-dominates-initial-view|ux.information-architecture|information_architecture|/|desktop",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "mobile-header-excessive-vertical-space|responsive.behavior|responsive|/|mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "contact-info-visible-no-primary-consultation-action|conversion.affordances|conversion|/|desktop,mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "mobile-intro-dense-justified-copy|ux.readability|readability|/|mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "desktop-navigation-blue-panels|visual.hierarchy|hierarchy|/|desktop",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "large-empty-layout-gaps|visual.composition|composition|/|desktop,mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "mobile-narrow-copy-density|visual.spacing|spacing|/|mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "desktop-mobile-visual-divergence|visual.consistency|consistency|/|desktop,mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "floating-contact-rail-overlay|visual.polish|polish|/|desktop",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "desktop-open-navigation-obscures-content|ux.navigation-overload|information_architecture|/|desktop",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "mobile-large-empty-space-before-content|responsive.excessive-empty-space|responsive|/|mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      },
+      {
+        "key": "contact-visible-but-project-path-weak|conversion.primary-action|conversion|/|desktop,mobile",
+        "observedRuns": 1,
+        "recurrenceRate": 0.2,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": false
+      }
+    ],
+    "meanRecurrence": 0.4448275862068961,
+    "stableFindings": 18,
+    "unstableFindings": 40
+  },
+  "trust": {
+    "minimumRepeats": 5,
+    "actualRepeats": 5,
+    "sufficientRepeats": true,
+    "completeCriterionSampleCount": 13,
+    "passed": false,
+    "reasons": [
+      "finding_recurrence_below_threshold"
+    ],
+    "thresholds": {
+      "maxMeanStandardDeviation": 0.8,
+      "minExactAgreement": 0.8,
+      "minWithinOneAgreement": 0.95,
+      "minFindingRecurrence": 0.8,
+      "minEvidenceExistence": 1,
+      "minEvidenceSupport": 0.9,
+      "minCriterionCoverage": 1
+    },
+    "evidenceExistenceRate": 1,
+    "evidenceSupportRate": 1,
+    "unsupportedClaimRate": 0,
+    "hallucinationRate": 0,
+    "criterionCoverage": 1,
+    "completeCriterionCoverage": 1,
+    "schemaComplianceRate": 1,
+    "numericIntegrityRate": 1,
+    "meanStandardDeviation": 0.13690737670102088,
+    "meanExactAgreement": 0.8923076923076922,
+    "meanWithinOneAgreement": 1,
+    "findingRecurrence": 0.4448275862068961
+  }
+}

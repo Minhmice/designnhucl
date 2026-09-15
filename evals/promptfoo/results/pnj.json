@@ -1,0 +1,303 @@
+{
+  "evalId": "eval-N45-2026-09-12T17:46:19",
+  "results": {
+    "version": 3,
+    "timestamp": "2026-09-12T17:46:19.556Z",
+    "prompts": [
+      {
+        "id": "6fc5376293ebdacd22090cc28285f86fe70029a273efea179127be61193bb78d",
+        "raw": "PNJ homepage reliability experiment",
+        "label": "PNJ homepage reliability experiment",
+        "provider": "weblens:pnj:local-allowlist:pipeline-consistency",
+        "metrics": {
+          "score": 1,
+          "testPassCount": 1,
+          "testFailCount": 0,
+          "testErrorCount": 0,
+          "assertPassCount": 1,
+          "assertFailCount": 0,
+          "totalLatencyMs": 28713,
+          "tokenUsage": {
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "total": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            },
+            "assertions": {
+              "total": 0,
+              "prompt": 0,
+              "completion": 0,
+              "cached": 0,
+              "numRequests": 0,
+              "completionDetails": {
+                "reasoning": 0,
+                "acceptedPrediction": 0,
+                "rejectedPrediction": 0,
+                "cacheReadInputTokens": 0,
+                "cacheCreationInputTokens": 0
+              }
+            }
+          },
+          "namedScores": {},
+          "namedScoresCount": {},
+          "namedScoreWeights": {},
+          "cost": 0
+        }
+      }
+    ],
+    "results": [
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Các lần chạy hoàn tất: 10/10; không hoàn tất: 0; không chấm được: 10",
+              "assertion": {
+                "type": "javascript",
+                "value": "file://assertions/pipeline-reliability.mjs"
+              }
+            }
+          ]
+        },
+        "id": "a05a1405-ad0c-4fa1-8136-f21dec9a01bd",
+        "latencyMs": 28713,
+        "namedScores": {},
+        "prompt": {
+          "raw": "PNJ homepage reliability experiment",
+          "label": "PNJ homepage reliability experiment",
+          "config": {}
+        },
+        "promptId": "6fc5376293ebdacd22090cc28285f86fe70029a273efea179127be61193bb78d",
+        "promptIdx": 0,
+        "provider": {
+          "id": "weblens:pnj:local-allowlist:pipeline-consistency",
+          "label": ""
+        },
+        "response": {
+          "output": "{\"pipeline\":{\"requestedRuns\":10,\"successfulRuns\":0,\"failedRuns\":0,\"unscorableRuns\":10,\"accessReasons\":[\"no_inspectable_content\"]},\"consistency\":{\"criteria\":[]}}",
+          "metadata": {
+            "evaluationMode": "pipeline-consistency",
+            "networkMode": "local-public",
+            "allowlist": [
+              "https://www.pnj.com.vn"
+            ],
+            "website": "https://www.pnj.com.vn/",
+            "sampleCount": 10,
+            "model": null,
+            "promptVersion": null,
+            "rubricVersion": null,
+            "runIds": [
+              "0c152f78-fbde-4f82-862e-a6f38637a060",
+              "775d094d-6a1a-48b4-ba89-afb1dcf046a4",
+              "bdfc71f0-ec76-4610-81b3-514d5dea689f",
+              "ae514963-0548-4c61-8f2c-2b4ad7afe85e",
+              "cec35d2a-dab9-43ef-b53d-fdb9c83b5596",
+              "6673967f-646a-4595-a262-0dc7e10ba67c",
+              "fe9fb124-02fb-423c-a702-c18a2a9b9f56",
+              "9133c8f4-ff77-4495-a569-ace38bc78067",
+              "c4a7c887-5b7b-4450-b64a-a018a8594f31",
+              "9d253910-795e-444b-b64c-9319b982140a"
+            ],
+            "successfulRuns": 0,
+            "failedRuns": 0,
+            "unscorableRuns": 10,
+            "reportPath": "evals/promptfoo/results/pnj/report.md",
+            "accessReasons": [
+              "no_inspectable_content"
+            ]
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "PNJ homepage (local allowlist)",
+          "vars": {
+            "url": "https://www.pnj.com.vn/",
+            "sampleCount": 10
+          },
+          "assert": [
+            {
+              "type": "javascript",
+              "value": "file://assertions/pipeline-reliability.mjs"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 0,
+        "tokenUsage": {
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "total": 0,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "url": "https://www.pnj.com.vn/",
+          "sampleCount": 10
+        },
+        "metadata": {
+          "evaluationMode": "pipeline-consistency",
+          "networkMode": "local-public",
+          "allowlist": [
+            "https://www.pnj.com.vn"
+          ],
+          "website": "https://www.pnj.com.vn/",
+          "sampleCount": 10,
+          "model": null,
+          "promptVersion": null,
+          "rubricVersion": null,
+          "runIds": [
+            "0c152f78-fbde-4f82-862e-a6f38637a060",
+            "775d094d-6a1a-48b4-ba89-afb1dcf046a4",
+            "bdfc71f0-ec76-4610-81b3-514d5dea689f",
+            "ae514963-0548-4c61-8f2c-2b4ad7afe85e",
+            "cec35d2a-dab9-43ef-b53d-fdb9c83b5596",
+            "6673967f-646a-4595-a262-0dc7e10ba67c",
+            "fe9fb124-02fb-423c-a702-c18a2a9b9f56",
+            "9133c8f4-ff77-4495-a569-ace38bc78067",
+            "c4a7c887-5b7b-4450-b64a-a018a8594f31",
+            "9d253910-795e-444b-b64c-9319b982140a"
+          ],
+          "successfulRuns": 0,
+          "failedRuns": 0,
+          "unscorableRuns": 10,
+          "reportPath": "evals/promptfoo/results/pnj/report.md",
+          "_promptfooFileMetadata": {},
+          "accessReasons": [
+            "no_inspectable_content"
+          ]
+        },
+        "failureReason": 0
+      }
+    ],
+    "stats": {
+      "successes": 1,
+      "failures": 0,
+      "errors": 0,
+      "tokenUsage": {
+        "prompt": 0,
+        "completion": 0,
+        "cached": 0,
+        "total": 0,
+        "numRequests": 1,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        },
+        "assertions": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          }
+        }
+      },
+      "durationMs": 28831,
+      "evaluationDurationMs": 28831
+    }
+  },
+  "config": {
+    "tags": {},
+    "description": "WebLens PNJ local allowlist pipeline consistency (10 full runs, cache disabled)",
+    "prompts": [
+      "PNJ homepage reliability experiment"
+    ],
+    "providers": [
+      "file://provider.mjs"
+    ],
+    "tests": [
+      {
+        "description": "PNJ homepage (local allowlist)",
+        "vars": {
+          "url": "https://www.pnj.com.vn/",
+          "sampleCount": 10
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "value": "file://assertions/pipeline-reliability.mjs"
+          }
+        ]
+      }
+    ],
+    "env": {},
+    "outputPath": [
+      "evals/promptfoo/results/pnj.json"
+    ],
+    "extensions": [],
+    "metadata": {},
+    "evaluateOptions": {}
+  },
+  "shareableUrl": null,
+  "metadata": {
+    "promptfooVersion": "0.123.0",
+    "nodeVersion": "v26.7.0",
+    "platform": "win32",
+    "arch": "x64",
+    "exportedAt": "2026-09-12T17:46:48.552Z",
+    "evaluationCreatedAt": "2026-09-12T17:46:19.556Z"
+  },
+  "vars": [
+    "url",
+    "sampleCount"
+  ],
+  "runtimeOptions": {
+    "eventSource": "cli",
+    "showProgressBar": true,
+    "repeat": 1,
+    "maxConcurrency": 1,
+    "cache": false
+  }
+}

@@ -1,0 +1,8 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import { calculateFindingStability } from '../src/evals/index.js';
+import type { QualityProfile } from '../src/contracts.js';
+const finding = (severity: 'high'|'medium' = 'high') => ({ id: 'f', fingerprint: 'a'.repeat(64), ruleId: 'r', category: 'ux', title: 'Issue', description: 'Issue', severity, epistemicType: 'objective' as const, verification: 'verified' as const, evidenceIds: ['e'], recommendation: 'Fix it', acceptanceCriteria: ['passes'], affectedRoutes: ['/'], affectedViewports: ['desktop'] });
+const profile = (findings: QualityProfile['findings']): QualityProfile => ({ schemaVersion: 1, assessmentStatus: 'complete', classification: { archetype: 'x', designLanguage: 'y', evidenceConfidence: 'high', evidenceIds: ['e'] }, dimensions: {}, findings, strengths: [], evidenceCoverage: { observed: 1, required: 1 }, versions: { rubric: 'r', prompt: 'p', model: 'm' } });
+test('finding stability measures recurrence and attribute agreement', async () => { const report = await calculateFindingStability([profile([finding()]), profile([finding()]), profile([])]); assert.equal(report.findings[0]?.recurrenceRate, 2 / 3); assert.equal(report.stableFindings, 0); assert.equal(report.unstableFindings, 1); });
+test('finding stability can use an optional semantic matcher', async () => { const first = finding(); const second = { ...finding(), fingerprint: 'b'.repeat(64), title: 'Similar issue' }; const report = await calculateFindingStability([profile([first]), profile([second])], { semanticMatcher: async () => true }); assert.equal(report.findings.length, 1); assert.equal(report.findings[0]?.recurrenceRate, 1); });

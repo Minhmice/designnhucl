@@ -1,0 +1,1 @@
+export default function adherence(output) { const report = JSON.parse(output); const score = report.adherence?.schemaComplianceRate ?? null; return { pass: score === 1, score: score ?? 0, reason: score === null ? 'Adherence unavailable.' : `Schema compliance: ${score}` }; }

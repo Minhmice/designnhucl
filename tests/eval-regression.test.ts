@@ -1,0 +1,5 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import { compareMetaEvaluations } from '../src/evals/index.js';
+const report = (std: number) => ({ provenance: { schemaVersion: 1 as const, metricVersion: 'v', mode: 'frozen-judge-consistency' as const, sampleCount: 2, runIds: ['r'], evidenceHashes: ['h'], model: 'm', provider: null, promptVersion: 'p', rubricVersion: 'r', createdAt: new Date().toISOString() }, consistency: { criteria: [{ criterionId: 'x', samples: 2, mean: 3, median: 3, variance: std ** 2, standardDeviation: std, minimum: 3, maximum: 3, range: 0, coefficientOfVariation: 0, exactAgreementRate: 1, withinOneAgreementRate: 1, distribution: { '0': 0, '1': 0, '2': 0, '3': 2, '4': 0 }, unobservedRate: 0, notApplicableRate: 0 }], dimensions: {} } });
+test('regression detects configurable variance degradation', () => { const result = compareMetaEvaluations(report(0.1), report(0.4), { maxStdDevIncrease: 0.2 }); assert.equal(result.passed, false); assert.match(result.failures[0]!, /variance/); });

@@ -13,8 +13,9 @@ export const ViewportSchema = z.object({
 }).strict();
 
 export const NetworkPolicySchema = z.object({
-  mode: z.enum(['offline', 'local-only', 'public']),
+  mode: z.enum(['offline', 'local-only', 'local-public', 'public']),
   allowedPrivateOrigins: z.array(z.string().url()),
+  allowedPublicOrigins: z.array(z.string().url()).optional(),
   enforcementProfile: z.string().min(1).nullable(),
 }).strict();
 

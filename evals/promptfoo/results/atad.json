@@ -1,0 +1,233 @@
+{
+  "evalId": "eval-JXs-2026-09-15T09:47:48",
+  "results": {
+    "version": 3,
+    "timestamp": "2026-09-15T09:47:48.138Z",
+    "prompts": [
+      {
+        "id": "66eac036946d9ee1d41ce8f9e805cc20a7b8292878ce64c5786acd0eda600188",
+        "raw": "ATAD homepage reliability experiment",
+        "label": "ATAD homepage reliability experiment",
+        "provider": "weblens:local-allowlist:pipeline-consistency",
+        "metrics": {
+          "score": 0,
+          "testPassCount": 0,
+          "testFailCount": 0,
+          "testErrorCount": 1,
+          "assertPassCount": 0,
+          "assertFailCount": 0,
+          "totalLatencyMs": 3600000,
+          "tokenUsage": {
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "total": 0,
+            "numRequests": 0,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            },
+            "assertions": {
+              "total": 0,
+              "prompt": 0,
+              "completion": 0,
+              "cached": 0,
+              "numRequests": 0,
+              "completionDetails": {
+                "reasoning": 0,
+                "acceptedPrediction": 0,
+                "rejectedPrediction": 0,
+                "cacheReadInputTokens": 0,
+                "cacheCreationInputTokens": 0
+              }
+            }
+          },
+          "namedScores": {},
+          "namedScoresCount": {},
+          "namedScoreWeights": {},
+          "cost": 0
+        }
+      }
+    ],
+    "results": [
+      {
+        "cost": 0,
+        "error": "Evaluation timed out after 3600000ms: Error: Evaluation timed out after 3600000ms",
+        "gradingResult": null,
+        "id": "aa55c723-b5fe-4004-a1af-2c983cabfdd5",
+        "latencyMs": 3600000,
+        "namedScores": {},
+        "prompt": {
+          "raw": "ATAD homepage reliability experiment",
+          "label": "ATAD homepage reliability experiment"
+        },
+        "promptId": "66eac036946d9ee1d41ce8f9e805cc20a7b8292878ce64c5786acd0eda600188",
+        "promptIdx": 0,
+        "provider": {
+          "id": "weblens:local-allowlist:pipeline-consistency",
+          "label": ""
+        },
+        "score": 0,
+        "success": false,
+        "testCase": {
+          "description": "ATAD homepage (local allowlist)",
+          "vars": {
+            "url": "https://atad.vn/",
+            "sampleCount": 5,
+            "resultDir": "evals/promptfoo/results/atad"
+          },
+          "assert": [
+            {
+              "type": "javascript",
+              "value": "file://assertions/pipeline-reliability.mjs"
+            },
+            {
+              "type": "javascript",
+              "value": "file://assertions/consistency.mjs"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 0,
+        "tokenUsage": {
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "total": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "url": "https://atad.vn/",
+          "sampleCount": 5,
+          "resultDir": "evals/promptfoo/results/atad"
+        },
+        "metadata": {},
+        "failureReason": 2
+      }
+    ],
+    "stats": {
+      "successes": 0,
+      "failures": 0,
+      "errors": 1,
+      "tokenUsage": {
+        "prompt": 0,
+        "completion": 0,
+        "cached": 0,
+        "total": 0,
+        "numRequests": 0,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        },
+        "assertions": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          }
+        }
+      },
+      "durationMs": 12772395,
+      "evaluationDurationMs": 12772395
+    }
+  },
+  "config": {
+    "tags": {},
+    "description": "WebLens ATAD meta-evaluation: 5 repeats; consistency, grounding, hallucination, adherence",
+    "prompts": [
+      "ATAD homepage reliability experiment"
+    ],
+    "providers": [
+      "file://provider.mjs"
+    ],
+    "tests": [
+      {
+        "description": "ATAD homepage (local allowlist)",
+        "vars": {
+          "url": "https://atad.vn/",
+          "sampleCount": 5,
+          "resultDir": "evals/promptfoo/results/atad"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "value": "file://assertions/pipeline-reliability.mjs"
+          },
+          {
+            "type": "javascript",
+            "value": "file://assertions/consistency.mjs"
+          }
+        ]
+      }
+    ],
+    "env": {
+      "PROMPTFOO_EVAL_TIMEOUT_MS": 3600000
+    },
+    "outputPath": [
+      "evals/promptfoo/results/atad.json"
+    ],
+    "extensions": [],
+    "metadata": {},
+    "evaluateOptions": {
+      "timeoutMs": 3600000,
+      "maxConcurrency": 1
+    }
+  },
+  "shareableUrl": null,
+  "metadata": {
+    "promptfooVersion": "0.123.0",
+    "nodeVersion": "v26.7.0",
+    "platform": "win32",
+    "arch": "x64",
+    "exportedAt": "2026-09-15T13:20:40.786Z",
+    "evaluationCreatedAt": "2026-09-15T09:47:48.138Z"
+  },
+  "vars": [
+    "url",
+    "sampleCount",
+    "resultDir"
+  ],
+  "runtimeOptions": {
+    "eventSource": "cli",
+    "timeoutMs": 3600000,
+    "maxConcurrency": 1,
+    "showProgressBar": true,
+    "repeat": 1,
+    "cache": false
+  }
+}

@@ -12,6 +12,17 @@ import lighthouse, { desktopConfig } from 'lighthouse';
 import { RedactionConfigSchema, RequirementSchema, type EvidenceArtifact, type EvidenceBundle, type EvidenceRef, type EvaluationRecipe, type NetworkPolicy, type RedactionConfig, type RedactionConfigInput, type Requirement, type RequirementCheckResult } from './contracts.js';
 import { assertNetworkReady, validateTarget } from './network.js';
 import { startNetworkProxy } from './network-proxy.js';
+import {
+  attemptCloudflareClearance,
+  isBotChallengeText,
+  resolveStealthOptions,
+  settleAfterNavigation,
+  stealthContextOptions,
+  stealthInitScript,
+  stealthLaunchOptions,
+  readVisibleBodyText,
+  withStealthChallengeOrigins,
+} from './stealth.js';
 
 export type CaptureRequest = {
   runId: string;
@@ -137,17 +148,36 @@ export async function captureSite(request: CaptureRequest): Promise<EvidenceBund
     refs.push({ artifactId: id, pageId: meta.pageId, viewportId: meta.viewportId, stateId: meta.stateId, selector: null, regionId: null, bbox: null });
   };
 
-  const policyProxy = await startNetworkProxy(request.networkPolicy);
+  const stealth = resolveStealthOptions(request.environment ?? process.env);
+  const capturePolicy = withStealthChallengeOrigins(request.networkPolicy, stealth);
+  const policyProxy = await startNetworkProxy(capturePolicy);
   try {
-  const browser = await chromium.launch({ headless: true, proxy: { server: policyProxy.server, bypass: '<-loopback>' }, args: ['--proxy-bypass-list=<-loopback>'] });
+  let browser;
   try {
+    browser = await chromium.launch(stealthLaunchOptions(stealth, {
+      headless: true,
+      proxy: { server: policyProxy.server, bypass: '<-loopback>' },
+      args: ['--proxy-bypass-list=<-loopback>'],
+    }));
+  } catch (error) {
+    if (!stealth.enabled || !stealth.realChrome) throw error;
+    limitations.push(`stealth: real Chrome unavailable (${error instanceof Error ? error.message : 'launch failed'}); falling back to Chromium`);
+    browser = await chromium.launch(stealthLaunchOptions({ ...stealth, realChrome: false }, {
+      headless: true,
+      proxy: { server: policyProxy.server, bypass: '<-loopback>' },
+      args: ['--proxy-bypass-list=<-loopback>'],
+    }));
+  }
+  try {
+    if (stealth.enabled) limitations.push('stealth: Scrapling-inspired anti-bot capture enabled');
     for (const viewport of request.recipe.viewports) {
-      const context = await browser.newContext({
+      const context = await browser.newContext(stealthContextOptions(stealth, {
         viewport: { width: viewport.width, height: viewport.height },
         deviceScaleFactor: viewport.deviceScaleFactor,
         serviceWorkers: 'block',
-      });
+      }));
       try {
+        if (stealth.enabled) await context.addInitScript(stealthInitScript(stealth));
         const page = await context.newPage();
         const runtime = { console: [] as string[], pageErrors: [] as string[], failedRequests: [] as string[], deniedRequests: [] as string[] };
         page.on('console', (message) => runtime.console.push(redactText(`${message.type()}: ${message.text()}`, patterns)));
@@ -155,7 +185,7 @@ export async function captureSite(request: CaptureRequest): Promise<EvidenceBund
         page.on('requestfailed', (failed) => runtime.failedRequests.push(redactText(`${failed.method()} ${redactUrl(failed.url())}: ${failed.failure()?.errorText ?? 'failed'}`, patterns)));
         await page.route('**/*', async (route) => {
           try {
-            await validateTarget(route.request().url(), request.networkPolicy);
+            await validateTarget(route.request().url(), capturePolicy);
             await route.continue();
           } catch {
             runtime.deniedRequests.push(redactUrl(route.request().url()));
@@ -163,15 +193,16 @@ export async function captureSite(request: CaptureRequest): Promise<EvidenceBund
           }
         });
 
-        await page.goto(target.url.href, { waitUntil: 'domcontentloaded', timeout: request.recipe.navigationTimeoutMs });
-        await Promise.race([
-          page.evaluate(() => document.fonts.ready).catch(() => undefined),
-          new Promise((done) => setTimeout(done, request.recipe.settleTimeoutMs)),
-        ]);
+        const navigationTimeout = stealth.enabled && stealth.solveCloudflare
+          ? Math.max(request.recipe.navigationTimeoutMs, stealth.challengeTimeoutMs)
+          : request.recipe.navigationTimeoutMs;
+        await page.goto(target.url.href, { waitUntil: 'domcontentloaded', timeout: navigationTimeout });
+        await settleAfterNavigation(page, stealth, request.recipe.settleTimeoutMs);
+        if (await attemptCloudflareClearance(page, stealth)) challenge = true;
 
         const title = await page.title();
-        const visibleText = (await page.locator('body').innerText().catch(() => '')).trim();
-        if (/checking your browser|captcha|verify you are human/i.test(`${title}\n${visibleText}`)) challenge = true;
+        const visibleText = await readVisibleBodyText(page);
+        if (isBotChallengeText(title, visibleText)) challenge = true;
         if (visibleText.length < 20) {
           limitations.push(`${viewport.id}: no inspectable visible content`);
           continue;
@@ -244,8 +275,9 @@ export async function captureSite(request: CaptureRequest): Promise<EvidenceBund
             let status: RequirementCheckResult['status'] = 'failed';
             let message = 'interaction check failed';
             const checkUrl = new URL(check.route, target.url);
-            await validateTarget(checkUrl.href, request.networkPolicy);
-            await page.goto(checkUrl.href, { waitUntil: 'domcontentloaded', timeout: request.recipe.navigationTimeoutMs });
+            await validateTarget(checkUrl.href, capturePolicy);
+            await page.goto(checkUrl.href, { waitUntil: 'domcontentloaded', timeout: navigationTimeout });
+            if (await attemptCloudflareClearance(page, stealth)) challenge = true;
             try {
               await page.locator(check.action.selector).click({ timeout: request.recipe.navigationTimeoutMs });
               if (check.assertion.kind === 'visible') {

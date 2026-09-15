@@ -1,0 +1,2 @@
+import type { GroundingReport } from '../../../src/evals/index.js';
+export function assertGrounding(report: GroundingReport, minimumSupportRate: number): { pass: boolean; score: number | null; reason: string } { const score = report.evidenceSupportRate; return { pass: score !== null && score >= minimumSupportRate, score, reason: score === null ? 'No findings.' : `Evidence support rate: ${score}` }; }

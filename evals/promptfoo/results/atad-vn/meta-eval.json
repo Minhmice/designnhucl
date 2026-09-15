@@ -1,0 +1,61 @@
+{
+  "provenance": {
+    "schemaVersion": 1,
+    "metricVersion": "meta-eval-v1",
+    "mode": "pipeline-consistency",
+    "sampleCount": 1,
+    "runIds": [
+      "8787332a-b55e-4f19-9d39-d6589c73bd41"
+    ],
+    "evidenceHashes": [],
+    "model": null,
+    "provider": null,
+    "promptVersion": null,
+    "rubricVersion": null,
+    "createdAt": "2026-09-14T07:56:12.262Z"
+  },
+  "pipeline": {
+    "requestedRuns": 1,
+    "successfulRuns": 0,
+    "failedRuns": 1,
+    "unscorableRuns": 0,
+    "runSummaries": [
+      {
+        "runId": "8787332a-b55e-4f19-9d39-d6589c73bd41",
+        "executionStatus": "failed",
+        "assessmentStatus": null,
+        "accessReason": null,
+        "scoreByDimension": {},
+        "findings": 0,
+        "errors": [
+          "judge-visual:judgestageerror"
+        ]
+      }
+    ]
+  },
+  "consistency": {
+    "criteria": [],
+    "dimensions": {}
+  },
+  "classificationStability": {
+    "samples": 0,
+    "modalArchetype": null,
+    "archetypeAgreement": null,
+    "modalDesignLanguage": null,
+    "designLanguageAgreement": null,
+    "confidenceDistribution": {
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    "archetypeEntropy": null,
+    "designLanguageEntropy": null
+  },
+  "findingStability": {
+    "totalRuns": 0,
+    "findings": [],
+    "meanRecurrence": null,
+    "stableFindings": 0,
+    "unstableFindings": 0
+  }
+}

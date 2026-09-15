@@ -1,0 +1,722 @@
+{
+  "provenance": {
+    "schemaVersion": 1,
+    "metricVersion": "meta-eval-v2",
+    "mode": "pipeline-consistency",
+    "sampleCount": 5,
+    "runIds": [
+      "00f56567-5f8b-4102-8fc8-0705f4a4c938",
+      "383dcd58-18c7-4479-a1d6-e65ed7ea3517",
+      "b74cf293-2647-40ec-a3bd-660149e0c682",
+      "fee7c6b4-d25f-4660-bdea-13e7f3e1b6bc",
+      "b265d4b5-e8e3-480d-8a81-ac237afc6ecd"
+    ],
+    "evidenceHashes": [
+      "67c1e7c829cc24638eeabaaff1c317f560811a79131545cba4eed3ef10d6660e",
+      "d5d76a8eae3fd355c342d592023b8ac186da5bbb52d7b06acb97c90441c9541c",
+      "d28a37e59736f5b4bf7b9da6e0f9195b41e3121dde02aa561bd9faca3749c568",
+      "3982e321f22cbb735b6ad8b9068a8047dfa59b5c8454eb542ccfd57d78b5c4fb",
+      "b4ab53f4624673b1d39eb22a809197122b89f7641c9e17ff03202b0dc6317045",
+      "24fe36ee9bcebea76963fa1ea67119fe5c3287261fd39ec0488f5e28204b197a",
+      "4a1eb1efbbda4e5b0eb39f72f77892c49cf87d76bbdf106fbb457dc7dfa95c3e",
+      "875c606a27175665ff87b144bf4dd3e80e6bfcc983013e64925a73d0bb360ea4",
+      "d28a37e59736f5b4bf7b9da6e0f9195b41e3121dde02aa561bd9faca3749c568",
+      "a53e5efeb2724d6e5062ffafc7ed9cbd63a9ae5e8225bfa7c934fd1c2187f176",
+      "50aee271820ac4322d76c2a7991e12adca90194be5c365260e1e25d558f53728",
+      "3b1d84ea8309739a30d551ee8c8496006e0f323d74489a65e8f410434049955a",
+      "3f0d3244e1ecad2029f2d5793d52975037adeb19e24b908bfbcf8a13e85ad064",
+      "67c1e7c829cc24638eeabaaff1c317f560811a79131545cba4eed3ef10d6660e",
+      "eaa6cd3ca140a559493092bae494f1003c8e065b881251596e1d5616f462edcd",
+      "d28a37e59736f5b4bf7b9da6e0f9195b41e3121dde02aa561bd9faca3749c568",
+      "3982e321f22cbb735b6ad8b9068a8047dfa59b5c8454eb542ccfd57d78b5c4fb",
+      "b4ab53f4624673b1d39eb22a809197122b89f7641c9e17ff03202b0dc6317045",
+      "9330017bb78600976210a547cfa74582647e5a7f3786ffa682db40a4d14f587b",
+      "4a1eb1efbbda4e5b0eb39f72f77892c49cf87d76bbdf106fbb457dc7dfa95c3e",
+      "5b7f6a37da37c18f361e3b677f7abde59c81b915f93280705b170ce01aa3e715",
+      "d28a37e59736f5b4bf7b9da6e0f9195b41e3121dde02aa561bd9faca3749c568",
+      "a53e5efeb2724d6e5062ffafc7ed9cbd63a9ae5e8225bfa7c934fd1c2187f176",
+      "50aee271820ac4322d76c2a7991e12adca90194be5c365260e1e25d558f53728",
+      "46ef88ddda1380a745c47c70f653d0327174cc9bbd3634c285013ce2ab300e32",
+      "67310cdf7c0ea1ae30efe4470a5cdd5f0b6c401a5a4bc341faf6ee5e2fbb6e46",
+      "67c1e7c829cc24638eeabaaff1c317f560811a79131545cba4eed3ef10d6660e",
+      "d5d76a8eae3fd355c342d592023b8ac186da5bbb52d7b06acb97c90441c9541c",
+      "d28a37e59736f5b4bf7b9da6e0f9195b41e3121dde02aa561bd9faca3749c568",
+      "3982e321f22cbb735b6ad8b9068a8047dfa59b5c8454eb542ccfd57d78b5c4fb",
+      "b4ab53f4624673b1d39eb22a809197122b89f7641c9e17ff03202b0dc6317045",
+      "5e94bc264e4653d85ff6ce4c6e597d903580dd20b1bc0d7a66e5876bcc6c767c",
+      "4a1eb1efbbda4e5b0eb39f72f77892c49cf87d76bbdf106fbb457dc7dfa95c3e",
+      "fdcaffc0a8cb8e02cf0719559ee36069507d0fb572923739c5741272e341488f",
+      "d28a37e59736f5b4bf7b9da6e0f9195b41e3121dde02aa561bd9faca3749c568",
+      "a53e5efeb2724d6e5062ffafc7ed9cbd63a9ae5e8225bfa7c934fd1c2187f176",
+      "a7aefaa20ae734b55d618e1e04e98c78fd6149197dcb5eedcf42ce1fe9c6a77a",
+      "a6d3b7063c116ddfd895c231487b88d271c84d90156e80cac3bde2764dc4dcff",
+      "ccf5ca84027ca5d0c1d3b4b4988d2b3536cc31b53a0dee67ebe8c05c623aa992",
+      "67c1e7c829cc24638eeabaaff1c317f560811a79131545cba4eed3ef10d6660e",
+      "b452752507c0ac7af5cd0bcdc5fc8603f4700235eae7ae6ff4cf62ad470d2a53",
+      "d28a37e59736f5b4bf7b9da6e0f9195b41e3121dde02aa561bd9faca3749c568",
+      "3982e321f22cbb735b6ad8b9068a8047dfa59b5c8454eb542ccfd57d78b5c4fb",
+      "b4ab53f4624673b1d39eb22a809197122b89f7641c9e17ff03202b0dc6317045",
+      "4e16176d7a03fe6568660dd4be3327a40909fc56ef72c009bdf29eaace78310a",
+      "4a1eb1efbbda4e5b0eb39f72f77892c49cf87d76bbdf106fbb457dc7dfa95c3e",
+      "44ca80abc9c7aa52556f6cc6b8267e8856a00ec3682662719155178de9bf1695",
+      "d28a37e59736f5b4bf7b9da6e0f9195b41e3121dde02aa561bd9faca3749c568",
+      "a53e5efeb2724d6e5062ffafc7ed9cbd63a9ae5e8225bfa7c934fd1c2187f176",
+      "50aee271820ac4322d76c2a7991e12adca90194be5c365260e1e25d558f53728",
+      "92f7bfb679f18bb332adfac19efb4544677db186cb96b9bff387ed2b30ebaae6",
+      "9d935e45d578bba73f022317e27788c430e8e476b58dc53a380e16b64e3e3607",
+      "67c1e7c829cc24638eeabaaff1c317f560811a79131545cba4eed3ef10d6660e",
+      "08103e2e09045866cdee864d94ca3a680b9dfd6f8cc9481a09a5635ce594fe5c",
+      "d28a37e59736f5b4bf7b9da6e0f9195b41e3121dde02aa561bd9faca3749c568",
+      "3982e321f22cbb735b6ad8b9068a8047dfa59b5c8454eb542ccfd57d78b5c4fb",
+      "b4ab53f4624673b1d39eb22a809197122b89f7641c9e17ff03202b0dc6317045",
+      "8c8939fe69e653203cb732661af1dbf0bffe2ee299d05af2d206821e05c5d573",
+      "4a1eb1efbbda4e5b0eb39f72f77892c49cf87d76bbdf106fbb457dc7dfa95c3e",
+      "5b7f6a37da37c18f361e3b677f7abde59c81b915f93280705b170ce01aa3e715",
+      "d28a37e59736f5b4bf7b9da6e0f9195b41e3121dde02aa561bd9faca3749c568",
+      "a53e5efeb2724d6e5062ffafc7ed9cbd63a9ae5e8225bfa7c934fd1c2187f176",
+      "50aee271820ac4322d76c2a7991e12adca90194be5c365260e1e25d558f53728",
+      "09f20b10e301a8983a527b3b675c41e3b6fddecd2d90ab8e90b85fc2654034c8",
+      "93617d3fade79359d8811887e5666d538fb9964d223711ec0cc274e13b4e984e"
+    ],
+    "model": "ag/gemini-3.5-flash-extra-low",
+    "provider": null,
+    "promptVersion": "prompt-v1",
+    "rubricVersion": "rubric-v1",
+    "createdAt": "2026-09-15T17:54:04.797Z"
+  },
+  "pipeline": {
+    "requestedRuns": 5,
+    "successfulRuns": 0,
+    "failedRuns": 0,
+    "unscorableRuns": 0,
+    "numericIntegrity": {
+      "valid": true,
+      "checkedMetrics": 60,
+      "invalidMetrics": []
+    },
+    "runSummaries": [
+      {
+        "runId": "00f56567-5f8b-4102-8fc8-0705f4a4c938",
+        "executionStatus": "completed",
+        "assessmentStatus": "partial",
+        "accessReason": null,
+        "scoreByDimension": {
+          "visual": null,
+          "ux": null,
+          "responsive": null,
+          "conversion": null,
+          "brand": null,
+          "technical": 91,
+          "accessibility": null
+        },
+        "findings": 18,
+        "errors": []
+      },
+      {
+        "runId": "383dcd58-18c7-4479-a1d6-e65ed7ea3517",
+        "executionStatus": "completed",
+        "assessmentStatus": "partial",
+        "accessReason": null,
+        "scoreByDimension": {
+          "visual": null,
+          "ux": null,
+          "responsive": null,
+          "conversion": null,
+          "brand": null,
+          "technical": 93,
+          "accessibility": null
+        },
+        "findings": 18,
+        "errors": []
+      },
+      {
+        "runId": "b74cf293-2647-40ec-a3bd-660149e0c682",
+        "executionStatus": "completed",
+        "assessmentStatus": "partial",
+        "accessReason": null,
+        "scoreByDimension": {
+          "visual": null,
+          "ux": null,
+          "responsive": null,
+          "conversion": null,
+          "brand": null,
+          "technical": 97,
+          "accessibility": null
+        },
+        "findings": 18,
+        "errors": []
+      },
+      {
+        "runId": "fee7c6b4-d25f-4660-bdea-13e7f3e1b6bc",
+        "executionStatus": "completed",
+        "assessmentStatus": "partial",
+        "accessReason": null,
+        "scoreByDimension": {
+          "visual": null,
+          "ux": null,
+          "responsive": null,
+          "conversion": null,
+          "brand": null,
+          "technical": 97,
+          "accessibility": null
+        },
+        "findings": 18,
+        "errors": []
+      },
+      {
+        "runId": "b265d4b5-e8e3-480d-8a81-ac237afc6ecd",
+        "executionStatus": "completed",
+        "assessmentStatus": "partial",
+        "accessReason": null,
+        "scoreByDimension": {
+          "visual": null,
+          "ux": null,
+          "responsive": null,
+          "conversion": null,
+          "brand": null,
+          "technical": 95,
+          "accessibility": null
+        },
+        "findings": 18,
+        "errors": []
+      }
+    ]
+  },
+  "consistency": {
+    "criteria": [
+      {
+        "criterionId": "conversion.affordances",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "responsive.behavior",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "ux.cta-clarity",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "ux.information-architecture",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "ux.readability",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.assets",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.color",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.composition",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.consistency",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.hierarchy",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.polish",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.spacing",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      },
+      {
+        "criterionId": "visual.typography",
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "variance": null,
+        "standardDeviation": null,
+        "minimum": null,
+        "maximum": null,
+        "range": null,
+        "coefficientOfVariation": null,
+        "exactAgreementRate": null,
+        "withinOneAgreementRate": null,
+        "distribution": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0
+        },
+        "unobservedRate": 1,
+        "notApplicableRate": 0
+      }
+    ],
+    "dimensions": {
+      "technical": {
+        "samples": 5,
+        "mean": 94.6,
+        "median": 95,
+        "variance": 5.4399999999999995,
+        "standardDeviation": 2.33238075793812,
+        "minimum": 91,
+        "maximum": 97,
+        "range": 6,
+        "coefficientOfVariation": 0.024655187716047782
+      }
+    }
+  },
+  "classificationStability": {
+    "samples": 0,
+    "modalArchetype": null,
+    "archetypeAgreement": null,
+    "modalDesignLanguage": null,
+    "designLanguageAgreement": null,
+    "confidenceDistribution": {
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    "archetypeEntropy": null,
+    "designLanguageEntropy": null
+  },
+  "findingStability": {
+    "totalRuns": 5,
+    "findings": [
+      {
+        "key": "76de9c87bc7a531917b38db5eae7a7b8e8e527e41a301ac47b60f62a74f9c1c8|heading-order|accessibility|/|desktop",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "5533b55e507e1fc3cf6ae28464e2728539c3b0dc3c3424eb10d07981799be555|image-alt|accessibility|/|desktop",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "69401c56687e5dfe583173c9b5cc3df99130581b2cbafb353b907587003c5393|landmark-one-main|accessibility|/|desktop",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "ad26078536a00b8048963150855a7a3bb2457c3b745cbfd74d61eb423cc1239b|link-in-text-block|accessibility|/|desktop",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "287a9317810de3eb96120b2c01cf7b3cbafe0c30ff591bf9c97bd10a42ba3ada|link-name|accessibility|/|desktop",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "1e467fc392188204c101cdab37a5af1a1d1052b887b7fa6cef5e7cc8670a5bc9|page-has-heading-one|accessibility|/|desktop",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "6242b06393bdda89c6673198d204f76cd00d98764f1bec8e4cd1a3b7c2657cb2|region|accessibility|/|desktop",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "6aaabbcd973e838945c6f230315b6a0d9eec0009f20bc53c8a3548fde452aa2a|color-contrast|accessibility|/|mobile",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "5859083c345bde12d57eb8757071b9bbd1ee23d22f23bbb2ba62307988ce2ac4|heading-order|accessibility|/|mobile",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "7f112714917de56dd5134a116f34a57ae91db3e8e395315b40f3cc1744364ff7|image-alt|accessibility|/|mobile",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "548b142deeb6225a9edc6d58aabdcf96e9b14ae2b4922bdd7d8cab210ac80d60|landmark-one-main|accessibility|/|mobile",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "56d313f20814e15dc7d295aea626648755cc30859b8de291e8744c95c9a1d5e4|link-in-text-block|accessibility|/|mobile",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "7794d7f62db4923b1ce46738b13262373111e62741a0ceacb9a739a32359d528|link-name|accessibility|/|mobile",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "9f94720d573da2d69f0f31f00013d8d4e76aa514f26f32d0f04aa8a19b40c93c|page-has-heading-one|accessibility|/|mobile",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "a63587b75a2d01032c1d58141387f51c3f8cebf0ebe26e6fbc6ddd9b970aa911|region|accessibility|/|mobile",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "b2cf4337b4615a140bc62fff8bc781a103590103819a94b97923da79c58ed159|horizontal-overflow|responsive|/|desktop",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "8958d6a32cbaa8018c276147806767b88c037843db92811ac9c315dcbd789448|page-error|technical|/|desktop",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      },
+      {
+        "key": "a94eddf1d051ce6ceee834e0bfedb9226bed3000e5a1ee09435969b6cb859ebb|page-error|technical|/|mobile",
+        "observedRuns": 5,
+        "recurrenceRate": 1,
+        "severityAgreement": 1,
+        "evidenceAgreement": 1,
+        "recommendationAgreement": 1,
+        "stable": true
+      }
+    ],
+    "meanRecurrence": 1,
+    "stableFindings": 18,
+    "unstableFindings": 0
+  },
+  "trust": {
+    "minimumRepeats": 5,
+    "actualRepeats": 5,
+    "sufficientRepeats": true,
+    "completeCriterionSampleCount": 0,
+    "passed": false,
+    "reasons": [
+      "incomplete_pipeline_runs",
+      "judge_stage_or_rubric_coverage_incomplete",
+      "criterion_variance_above_threshold",
+      "exact_agreement_below_threshold",
+      "within_one_agreement_below_threshold",
+      "criterion_coverage_incomplete",
+      "schema_or_evidence_adherence_failed"
+    ],
+    "thresholds": {
+      "maxMeanStandardDeviation": 0.8,
+      "minExactAgreement": 0.8,
+      "minWithinOneAgreement": 0.95,
+      "minFindingRecurrence": 0.8,
+      "minEvidenceExistence": 1,
+      "minEvidenceSupport": 0.9,
+      "minCriterionCoverage": 1
+    },
+    "evidenceExistenceRate": 1,
+    "evidenceSupportRate": 1,
+    "unsupportedClaimRate": 0,
+    "hallucinationRate": 0,
+    "criterionCoverage": 0,
+    "completeCriterionCoverage": 1,
+    "schemaComplianceRate": 0,
+    "numericIntegrityRate": 1,
+    "meanStandardDeviation": null,
+    "meanExactAgreement": null,
+    "meanWithinOneAgreement": null,
+    "findingRecurrence": 1
+  }
+}

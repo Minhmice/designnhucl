@@ -1,0 +1,161 @@
+{
+  "durationMs": 173999,
+  "model": "coding-v3",
+  "runId": "014d09b9-130c-4aef-8a58-a4e25d0318ff",
+  "executionStatus": "completed",
+  "assessmentStatus": "complete",
+  "accessReason": null,
+  "stealth": "1",
+  "dimensions": {
+    "visual": {
+      "value": 81,
+      "state": "assessed"
+    },
+    "ux": {
+      "value": 67,
+      "state": "assessed"
+    },
+    "responsive": {
+      "value": 75,
+      "state": "assessed"
+    },
+    "conversion": {
+      "value": 100,
+      "state": "assessed"
+    },
+    "brand": {
+      "value": null,
+      "state": "not_assessed"
+    },
+    "technical": {
+      "value": 62,
+      "state": "assessed"
+    },
+    "accessibility": {
+      "value": null,
+      "state": "not_assessed"
+    }
+  },
+  "classification": {
+    "archetype": "E-commerce trang sức",
+    "designLanguage": "Bán lẻ trang sức cao cấp đại chúng: hình ảnh sản phẩm lớn, quảng bá khuyến mãi nổi bật, bảng màu xanh navy–vàng kim, bố cục thương mại sạch và tối ưu theo hướng di động",
+    "evidenceConfidence": "high",
+    "evidenceIds": [
+      "home-desktop-initial-above",
+      "home-mobile-initial-above"
+    ]
+  },
+  "findingsCount": 26,
+  "findings": [
+    {
+      "severity": "medium",
+      "title": "Carousel cắt card ở mép phải mobile",
+      "ruleId": "UI-OVERFLOW",
+      "category": "responsive"
+    },
+    {
+      "severity": "medium",
+      "title": "Khoảng trắng lớn trong khối Tin tức",
+      "ruleId": "LAYOUT-EMPTY-SPACE",
+      "category": "composition"
+    },
+    {
+      "severity": "low",
+      "title": "Nhiều carousel sản phẩm làm loãng trọng tâm",
+      "ruleId": "HIERARCHY-SECTION-DENSITY",
+      "category": "hierarchy"
+    },
+    {
+      "severity": "medium",
+      "title": "Hàng danh mục bị cắt ngang",
+      "ruleId": "responsive.horizontal-content-visibility",
+      "category": "responsive"
+    },
+    {
+      "severity": "medium",
+      "title": "Thông tin sản phẩm quá nhỏ",
+      "ruleId": "readability.text-size-density",
+      "category": "readability"
+    },
+    {
+      "severity": "low",
+      "title": "Trang chủ có nhiều lớp nội dung",
+      "ruleId": "ux.content-hierarchy",
+      "category": "information_architecture"
+    },
+    {
+      "severity": "medium",
+      "title": "ARIA hidden element must not be focusable or contain focusable elements",
+      "ruleId": "aria-hidden-focus",
+      "category": "accessibility"
+    },
+    {
+      "severity": "high",
+      "title": "Images must have alternative text",
+      "ruleId": "image-alt",
+      "category": "accessibility"
+    },
+    {
+      "severity": "medium",
+      "title": "Alternative text of images should not be repeated as text",
+      "ruleId": "image-redundant-alt",
+      "category": "accessibility"
+    },
+    {
+      "severity": "medium",
+      "title": "Main landmark should not be contained in another landmark",
+      "ruleId": "landmark-main-is-top-level",
+      "category": "accessibility"
+    },
+    {
+      "severity": "medium",
+      "title": "Document should not have more than one main landmark",
+      "ruleId": "landmark-no-duplicate-main",
+      "category": "accessibility"
+    },
+    {
+      "severity": "medium",
+      "title": "Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+      "ruleId": "landmark-unique",
+      "category": "accessibility"
+    }
+  ],
+  "lead": null,
+  "critic": {
+    "verdict": "REVIEW",
+    "failedGates": [
+      "human_quality_review_required"
+    ],
+    "unmetRequirements": [],
+    "prioritizedFixes": [],
+    "coverageGaps": [],
+    "scopeStatement": "Decision covers / and the evidence captured by this recipe only."
+  },
+  "limitations": [
+    "stealth: Scrapling-inspired anti-bot capture enabled"
+  ],
+  "errors": [],
+  "judgeAttempts": [
+    {
+      "kind": "classify",
+      "attempt": 1,
+      "status": "complete",
+      "reason": null,
+      "retryable": false
+    },
+    {
+      "kind": "visual",
+      "attempt": 1,
+      "status": "complete",
+      "reason": null,
+      "retryable": false
+    },
+    {
+      "kind": "experience",
+      "attempt": 1,
+      "status": "complete",
+      "reason": null,
+      "retryable": false
+    }
+  ]
+}

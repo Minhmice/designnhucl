@@ -1,0 +1,1 @@
+export default function grounding(output) { const report = JSON.parse(output); const score = report.grounding?.evidenceSupportRate ?? null; return { pass: score !== null && score >= 0.85, score: score ?? 0, reason: score === null ? 'Grounding unavailable.' : `Evidence Support Rate: ${score}` }; }

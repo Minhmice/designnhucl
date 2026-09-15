@@ -1,0 +1,21 @@
+description: "WebLens ATAD meta-evaluation: 5 repeats; consistency, grounding, hallucination, adherence"
+evaluateOptions:
+  timeoutMs: 14400000
+  maxConcurrency: 1
+env:
+  PROMPTFOO_EVAL_TIMEOUT_MS: 14400000
+prompts:
+  - ATAD homepage reliability experiment
+providers:
+  - file://provider.mjs
+tests:
+  - description: ATAD homepage (local allowlist)
+    vars:
+      url: https://atad.vn/
+      sampleCount: 5
+      resultDir: evals/promptfoo/results/atad
+    assert:
+      - type: javascript
+        value: file://assertions/pipeline-reliability.mjs
+      - type: javascript
+        value: file://assertions/consistency.mjs

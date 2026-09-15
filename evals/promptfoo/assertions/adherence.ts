@@ -1,0 +1,2 @@
+import type { AdherenceReport } from '../../../src/evals/index.js';
+export function assertAdherence(report: AdherenceReport): { pass: boolean; score: number; reason: string } { const pass = report.schemaCompliant && report.unexpectedCriteria.length === 0 && report.missingCriteria.length === 0 && report.missingEvidenceCriteria.length === 0; return { pass, score: report.criterionCoverage, reason: pass ? 'Schema and rubric adherence passed.' : 'Schema or rubric adherence failed.' }; }

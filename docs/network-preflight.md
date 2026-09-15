@@ -11,6 +11,7 @@ The standalone build does not treat this caller-controlled environment string as
 Profiles:
 
 - `local-deny-all`: permit only the exact loopback/staging scheme, host, and port supplied in `allowedPrivateOrigins`; the in-process proxy rejects other destinations.
+- `local-public-allowlist`: local operator-approved mode. It permits only the exact origins in `allowedPublicOrigins`, resolves every hostname before connecting, rejects private/reserved addresses, and rechecks every redirect and subresource. The built-in list covers approved site origins plus first-party CDNs/APIs needed to render them (see `src/network-allowlist.ts`). Third-party ads/trackers remain denied. This is narrower than unrestricted public mode, but it is still not a substitute for an independently enforced worker boundary.
 - `public-egress` (trusted-worker deployment only): deny private, loopback, link-local, multicast, reserved, and metadata destinations at connection time; constrain protocols and ports to approved HTTP(S) scope.
 
 The environment string is only a local profile selection/attestation, not enforcement by itself. It never unlocks standalone public mode.
@@ -38,6 +39,7 @@ Every redirect and subresource must remain inside policy. A denied font, image, 
 - Set `allowedPrivateOrigins` to the exact origin including port.
 - Activate deny-all external egress when the environment supports it.
 - Set `WEBLENS_NETWORK_ENFORCEMENT=verified:local-deny-all` only for the intended profile.
+- For the built-in PNJ/ATAD experiments, set `WEBLENS_NETWORK_ENFORCEMENT=verified:local-public-allowlist`; the allowlist contains only the explicitly listed origins in `src/network-allowlist.ts`.
 - Verify an allowed local page captures.
 - Verify another local port and a public URL are rejected.
 - Verify no browser opens when the environment assertion is absent.
