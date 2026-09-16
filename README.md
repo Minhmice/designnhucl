@@ -190,3 +190,24 @@ See [the control-plane foundation guide](docs/control-plane-foundation.md) for R
 ## Meta-evaluation (opt-in)
 
 The additive `src/evals/` library evaluates evaluator trustworthiness without entering the production path. It supports frozen-judge consistency, end-to-end pipeline consistency, finding stability, evidence grounding, rubric adherence, human calibration, and configurable regression comparisons. See [meta-evaluation](docs/meta-evaluation.md). The Promptfoo files under `evals/promptfoo/` are an optional thin adapter and are not a production dependency.
+
+## Operator Dashboard (Next.js & CLI)
+
+The repository provides an operator dashboard console built with Next.js, React, Tailwind CSS, Lucide React, and Recharts, connected to the evaluator runner and control-plane stores.
+
+### Single Command Runner (runs both Backend API & Next.js UI):
+```powershell
+npm run dev
+```
+- Next.js UI runs on: `http://localhost:3000`
+- Backend API runs on: `http://localhost:3001` (with automatic Next.js API proxy `/api/*`)
+
+### Running components separately:
+```powershell
+# Run Next.js UI only:
+npm run dashboard:dev
+
+# Run standalone Backend API server only:
+npm run dashboard
+```
+

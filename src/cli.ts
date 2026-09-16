@@ -13,6 +13,7 @@ import { evaluate } from './runner.js';
 import { loadRun, saveDecisionRevision } from './store.js';
 import { createBudgetLedger, runJudges } from './judges.js';
 import { evaluateFrozenJudges, saveMetaEvaluation } from './evals/index.js';
+import { createDashboardServer } from './dashboard/server.js';
 
 export type CliIo = { stdout: (value: string) => void; stderr: (value: string) => void; environment: Record<string, string | undefined> };
 
@@ -23,6 +24,21 @@ async function readJson(path: string): Promise<unknown> {
 export async function runCli(args: string[], io: CliIo): Promise<number> {
   const [command, ...rest] = args;
   try {
+    if (command === 'dashboard') {
+      const parsed = parseArgs({ args: rest, allowPositionals: true, options: {
+        port: { type: 'string', default: io.environment.PORT ?? '3000' },
+        host: { type: 'string', default: io.environment.HOST ?? '0.0.0.0' },
+        artifacts: { type: 'string', default: 'runs' },
+      } });
+      const port = Number(parsed.values.port) || 3000;
+      const host = parsed.values.host ?? '0.0.0.0';
+      const artifactRoot = parsed.values.artifacts ?? 'runs';
+      const server = createDashboardServer({ port, host, artifactRoot });
+      await server.listen();
+      io.stdout(`WebLens Operator Dashboard running at http://${host === '0.0.0.0' ? 'localhost' : host}:${port}\n`);
+      return 0;
+    }
+
     if (command === 'batch') {
       const parsed = parseArgs({ args: rest, allowPositionals: true, options: {
         state: { type: 'string' }, 'max-items': { type: 'string', default: '30' },
@@ -153,7 +169,7 @@ export async function runCli(args: string[], io: CliIo): Promise<number> {
       if (run.criticDecision?.verdict === 'REVIEW') return 3;
       return 0;
     }
-    io.stderr('Usage: weblens evaluate|batch|gate|compare|replay ...\n');
+    io.stderr('Usage: weblens evaluate|batch|gate|compare|replay|dashboard ...\n');
     return 2;
   } catch (error) {
     io.stderr(`${error instanceof Error ? error.message : String(error)}\n`);
